@@ -30,8 +30,8 @@ class JMDictService: ObservableObject {
     private func mockJMDictSearch(_ query: String) -> [JapaneseEntry] {
         let mockEntries = [
             JapaneseEntry(
-                word: "\u3053\u3093\u306b\u3061\u306f",
-                hiragana: "\u3053\u3093\u306b\u3061\u306f",
+                word: "こんにちは",
+                hiragana: "こんにちは",
                 katakana: nil,
                 romaji: "konnichiwa",
                 meanings: ["hello", "good day", "good afternoon"],
@@ -40,20 +40,20 @@ class JMDictService: ObservableObject {
                 frequency: 100
             ),
             JapaneseEntry(
-                word: "\u5b66\u6821",
-                hiragana: "\u304c\u3063\u3053\u3046",
+                word: "学校",
+                hiragana: "がっこう",
                 katakana: nil,
                 romaji: "gakkou",
                 meanings: ["school"],
                 partOfSpeech: ["noun"],
                 jlptLevel: .n5,
                 frequency: 95,
-                kanji: "\u5b66\u6821"
+                kanji: "学校"
             ),
             JapaneseEntry(
-                word: "\u30b3\u30fc\u30d2\u30fc",
+                word: "コーヒー",
                 hiragana: nil,
-                katakana: "\u30b3\u30fc\u30d2\u30fc",
+                katakana: "コーヒー",
                 romaji: "koohii",
                 meanings: ["coffee"],
                 partOfSpeech: ["noun"],
@@ -61,26 +61,26 @@ class JMDictService: ObservableObject {
                 frequency: 80
             ),
             JapaneseEntry(
-                word: "\u5148\u751f",
-                hiragana: "\u305b\u3093\u305b\u3044",
+                word: "先生",
+                hiragana: "せんせい",
                 katakana: nil,
                 romaji: "sensei",
                 meanings: ["teacher", "doctor", "master"],
                 partOfSpeech: ["noun"],
                 jlptLevel: .n5,
                 frequency: 85,
-                kanji: "\u5148\u751f"
+                kanji: "先生"
             ),
             JapaneseEntry(
-                word: "\u98df\u3079\u308b",
-                hiragana: "\u305f\u3079\u308b",
+                word: "食べる",
+                hiragana: "たべる",
                 katakana: nil,
                 romaji: "taberu",
                 meanings: ["to eat"],
                 partOfSpeech: ["ichidan verb", "transitive verb"],
                 jlptLevel: .n5,
                 frequency: 90,
-                kanji: "\u98df\u3079\u308b"
+                kanji: "食べる"
             )
         ]
         

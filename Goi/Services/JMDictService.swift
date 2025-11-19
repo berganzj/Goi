@@ -37,7 +37,8 @@ class JMDictService: ObservableObject {
                 meanings: ["hello", "good day", "good afternoon"],
                 partOfSpeech: ["expression", "greeting"],
                 jlptLevel: .n5,
-                frequency: 100
+                frequency: 100,
+                kanji: nil
             ),
             JapaneseEntry(
                 word: "学校",
@@ -58,7 +59,8 @@ class JMDictService: ObservableObject {
                 meanings: ["coffee"],
                 partOfSpeech: ["noun"],
                 jlptLevel: .n5,
-                frequency: 80
+                frequency: 80,
+                kanji: nil
             ),
             JapaneseEntry(
                 word: "先生",

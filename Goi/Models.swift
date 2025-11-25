@@ -213,7 +213,8 @@ class DictionaryManager: ObservableObject {
                     meanings: ["hello", "good afternoon"],
                     partOfSpeech: ["greeting"],
                     jlptLevel: .n5,
-                    frequency: 100
+                    frequency: 100,
+                    kanji: nil
                 ),
                 JapaneseEntry(
                     word: "ありがとう",
@@ -223,7 +224,8 @@ class DictionaryManager: ObservableObject {
                     meanings: ["thank you"],
                     partOfSpeech: ["expression"],
                     jlptLevel: .n5,
-                    frequency: 95
+                    frequency: 95,
+                    kanji: nil
                 ),
                 JapaneseEntry(
                     word: "コーヒー",
@@ -233,7 +235,8 @@ class DictionaryManager: ObservableObject {
                     meanings: ["coffee"],
                     partOfSpeech: ["noun"],
                     jlptLevel: .n5,
-                    frequency: 80
+                    frequency: 80,
+                    kanji: nil
                 ),
                 JapaneseEntry(
                     word: "学校",

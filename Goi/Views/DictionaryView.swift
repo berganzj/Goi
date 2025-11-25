@@ -44,8 +44,17 @@ struct DictionaryView: View {
                 if selectedLevel != nil {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
-                            FilterPill(title: selectedLevel!.rawValue, isSelected: true) {
-                                selectedLevel = nil
+                            Button(action: { selectedLevel = nil }) {
+                                HStack(spacing: 4) {
+                                    Text(selectedLevel!.rawValue)
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.white)
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(16)
                             }
                         }
                         .padding(.horizontal)
@@ -56,9 +65,7 @@ struct DictionaryView: View {
                 List {
                     Section {
                         ForEach(filteredEntries) { entry in
-                            NavigationLink(destination: VocabularyDetailView(entry: entry)) {
-                                VocabularyEntryRowView(entry: entry)
-                            }
+                            VocabularyEntryRowView(entry: entry)
                         }
                     } header: {
                         if !searchText.isEmpty {
@@ -71,7 +78,43 @@ struct DictionaryView: View {
             }
             .navigationTitle("Dictionary")
             .sheet(isPresented: $showingFilters) {
-                FilterView(selectedLevel: $selectedLevel)
+                NavigationView {
+                    List {
+                        Section("JLPT Level") {
+                            ForEach(JLPTLevel.allCases, id: \.self) { level in
+                                Button(action: {
+                                    selectedLevel = level
+                                    showingFilters = false
+                                }) {
+                                    HStack {
+                                        Text(level.rawValue)
+                                        Spacer()
+                                        if selectedLevel == level {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.blue)
+                                        }
+                                    }
+                                    .foregroundColor(.primary)
+                                }
+                            }
+                            
+                            Button("Clear Filter") {
+                                selectedLevel = nil
+                                showingFilters = false
+                            }
+                            .foregroundColor(.red)
+                        }
+                    }
+                    .navigationTitle("Filters")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Done") {
+                                showingFilters = false
+                            }
+                        }
+                    }
+                }
             }
         }
     }

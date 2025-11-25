@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Modern gradient -->
+    <linearGradient id="modernBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Text gradient -->
+    <linearGradient id="modernText" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d3748;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a202c;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="240" ry="240" fill="url(#modernBg)" />
+  
+  <!-- Geometric accent -->
+  <circle cx="512" cy="512" r="400" fill="none" stroke="white" stroke-width="2" opacity="0.1"/>
+  <circle cx="512" cy="512" r="300" fill="none" stroke="white" stroke-width="1" opacity="0.15"/>
+  
+  <!-- Main hiragana: ごい -->
+  <text x="512" y="600" 
+        font-family="Hiragino Sans, Yu Gothic, sans-serif" 
+        font-size="360" 
+        font-weight="300"
+        text-anchor="middle" 
+        fill="white"
+        filter="url(#glow)"
+        letter-spacing="20px">ごい</text>
+        
+  <!-- Modern accent dots -->
+  <circle cx="300" cy="300" r="12" fill="white" opacity="0.3"/>
+  <circle cx="724" cy="724" r="8" fill="white" opacity="0.4"/>
+  <circle cx="724" cy="300" r="6" fill="white" opacity="0.2"/>
+</svg>

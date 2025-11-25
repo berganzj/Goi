@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Dark gradient -->
+    <radialGradient id="darkBg" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#2d3748;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a202c;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Accent gradient -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd89b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#19547b;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Soft glow -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" 
+                     values="1 1 1 0 0  1 1 1 0 0  1 1 1 0 0  0 0 0 1 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="240" ry="240" fill="url(#darkBg)" />
+  
+  <!-- Decorative ring -->
+  <circle cx="512" cy="512" r="350" fill="none" stroke="url(#accentGrad)" stroke-width="3" opacity="0.3"/>
+  
+  <!-- Main hiragana: ごい -->
+  <text x="512" y="600" 
+        font-family="Hiragino Mincho ProN, Yu Mincho, serif" 
+        font-size="380" 
+        font-weight="400"
+        text-anchor="middle" 
+        fill="url(#accentGrad)"
+        filter="url(#softGlow)"
+        letter-spacing="10px">ごい</text>
+        
+  <!-- Elegant accent -->
+  <line x1="200" y1="700" x2="824" y2="700" stroke="url(#accentGrad)" stroke-width="2" opacity="0.4"/>
+  
+  <!-- Subtle sparkles -->
+  <circle cx="200" cy="200" r="3" fill="#ffd89b" opacity="0.6"/>
+  <circle cx="824" cy="200" r="2" fill="#ffd89b" opacity="0.4"/>
+  <circle cx="824" cy="824" r="4" fill="#ffd89b" opacity="0.5"/>
+  <circle cx="200" cy="824" r="2" fill="#ffd89b" opacity="0.3"/>
+</svg>

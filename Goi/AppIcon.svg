@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient for background -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradient for text -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:0.95" />
+    </linearGradient>
+    
+    <!-- Shadow filter -->
+    <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+      <feOffset dx="2" dy="4" result="offset"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background with rounded corners -->
+  <rect width="1024" height="1024" rx="200" ry="200" fill="url(#bgGradient)" />
+  
+  <!-- Subtle pattern overlay -->
+  <circle cx="200" cy="200" r="100" fill="white" opacity="0.05"/>
+  <circle cx="824" cy="824" r="150" fill="white" opacity="0.03"/>
+  
+  <!-- Main hiragana text: ごい -->
+  <text x="512" y="580" 
+        font-family="Hiragino Sans, Hiragino Mincho ProN, Yu Mincho, serif" 
+        font-size="400" 
+        font-weight="300"
+        text-anchor="middle" 
+        fill="url(#textGradient)"
+        filter="url(#textShadow)">ごい</text>
+  
+  <!-- Small subtitle -->
+  <text x="512" y="720" 
+        font-family="Helvetica Neue, sans-serif" 
+        font-size="60" 
+        font-weight="200"
+        text-anchor="middle" 
+        fill="white" 
+        opacity="0.8">vocabulary</text>
+        
+  <!-- Decorative elements -->
+  <circle cx="180" cy="120" r="8" fill="white" opacity="0.6"/>
+  <circle cx="844" cy="180" r="6" fill="white" opacity="0.4"/>
+  <circle cx="120" cy="844" r="10" fill="white" opacity="0.3"/>
+</svg>

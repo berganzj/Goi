@@ -14,7 +14,6 @@
 		A20000030ACC001100000030 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000031ACC001100000031 /* Models.swift */; };
 		A20000032ACC001100000032 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000033ACC001100000033 /* MainTabView.swift */; };
 		A20000034ACC001100000034 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000035ACC001100000035 /* DictionaryView.swift */; };
-		A20000036ACC001100000036 /* MangaListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000037ACC001100000037 /* MangaListView.swift */; };
 		A20000038ACC001100000038 /* KanaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000039ACC001100000039 /* KanaKeyboard.swift */; };
 		A20000040ACC001100000040 /* JMDictService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000041ACC001100000041 /* JMDictService.swift */; };
 /* End PBXBuildFile section */
@@ -29,7 +28,6 @@
 		A20000031ACC001100000031 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		A20000033ACC001100000033 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		A20000035ACC001100000035 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
-		A20000037ACC001100000037 /* MangaListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListView.swift; sourceTree = "<group>"; };
 		A20000039ACC001100000039 /* KanaKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaKeyboard.swift; sourceTree = "<group>"; };
 		A20000041ACC001100000041 /* JMDictService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMDictService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,7 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				A20000035ACC001100000035 /* DictionaryView.swift */,
-				A20000037ACC001100000037 /* MangaListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,7 +185,6 @@
 				A20000030ACC001100000030 /* Models.swift in Sources */,
 				A20000032ACC001100000032 /* MainTabView.swift in Sources */,
 				A20000034ACC001100000034 /* DictionaryView.swift in Sources */,
-				A20000036ACC001100000036 /* MangaListView.swift in Sources */,
 				A20000038ACC001100000038 /* KanaKeyboard.swift in Sources */,
 				A20000040ACC001100000040 /* JMDictService.swift in Sources */,
 			);

@@ -14,6 +14,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    MainTabView()
-        .environmentObject(DictionaryManager())
+    ContentView()
 }

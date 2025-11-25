@@ -2,12 +2,12 @@ import SwiftUI
 
 @main
 struct GoiApp: App {
-    @StateObject private var dictionaryManager = DictionaryManager()
+    @StateObject private var vocabularyManager = VocabularyManager()
     
     var body: some Scene {
         WindowGroup {
             MainTabView()
-                .environmentObject(dictionaryManager)
+                .environmentObject(vocabularyManager)
         }
     }
 }

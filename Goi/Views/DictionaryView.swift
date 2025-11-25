@@ -1,14 +1,16 @@
 import SwiftUI
 
+// Note: This view is kept for backward compatibility but not used in the main app
+// The main vocabulary functionality is now in VocabularyListView
 struct DictionaryView: View {
-    @EnvironmentObject var dictionaryManager: DictionaryManager
+    @EnvironmentObject var vocabularyManager: VocabularyManager
     @State private var searchText = ""
     @State private var selectedLevel: JLPTLevel?
     @State private var showingFilters = false
     
-    private var filteredEntries: [JapaneseEntry] {
-        let entries = searchText.isEmpty ? dictionaryManager.allEntries : 
-            dictionaryManager.allEntries.filter { entry in
+    private var filteredEntries: [VocabularyEntry] {
+        let entries = searchText.isEmpty ? vocabularyManager.getAllEntries() : 
+            vocabularyManager.getAllEntries().filter { entry in
                 entry.word.localizedCaseInsensitiveContains(searchText) ||
                 entry.romaji.localizedCaseInsensitiveContains(searchText) ||
                 entry.meanings.joined().localizedCaseInsensitiveContains(searchText) ||
@@ -20,7 +22,7 @@ struct DictionaryView: View {
             return entries.filter { $0.jlptLevel == level }
         }
         
-        return entries.sorted { $0.frequency ?? 0 > $1.frequency ?? 0 }
+        return entries
     }
     
     var body: some View {
@@ -75,174 +77,9 @@ struct DictionaryView: View {
     }
 }
 
-struct FilterPill: View {
-    let title: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 4) {
-                Text(title)
-                if isSelected {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.white)
-                }
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(isSelected ? Color.blue : Color.gray.opacity(0.2))
-            .foregroundColor(isSelected ? .white : .primary)
-            .cornerRadius(16)
-        }
-    }
-}
-
-struct FilterView: View {
-    @Binding var selectedLevel: JLPTLevel?
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        NavigationView {
-            List {
-                Section("JLPT Level") {
-                    ForEach(JLPTLevel.allCases, id: \.self) { level in
-                        Button(action: {
-                            selectedLevel = level
-                            dismiss()
-                        }) {
-                            HStack {
-                                Text(level.rawValue)
-                                Spacer()
-                                if selectedLevel == level {
-                                    Image(systemName: "checkmark")
-                                        .foregroundColor(.blue)
-                                }
-                            }
-                            .foregroundColor(.primary)
-                        }
-                    }
-                    
-                    Button("Clear Filter") {
-                        selectedLevel = nil
-                        dismiss()
-                    }
-                    .foregroundColor(.red)
-                }
-            }
-            .navigationTitle("Filters")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-}
-
-struct VocabularyDetailView: View {
-    let entry: JapaneseEntry
-    @EnvironmentObject var dictionaryManager: DictionaryManager
-    
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                // Main word display
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text(entry.displayWord)
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                        
-                        if let level = entry.jlptLevel {
-                            Text(level.rawValue)
-                                .font(.caption)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                        }
-                        
-                        Spacer()
-                    }
-                    
-                    if let hiragana = entry.hiragana {
-                        Text("Hiragana: \(hiragana)")
-                            .font(.title2)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    if let katakana = entry.katakana {
-                        Text("Katakana: \(katakana)")
-                            .font(.title2)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    Text("Romaji: \(entry.romaji)")
-                        .font(.title3)
-                        .foregroundColor(.secondary)
-                }
-                
-                Divider()
-                
-                // Meanings
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Meanings")
-                        .font(.headline)
-                    
-                    ForEach(Array(entry.meanings.enumerated()), id: \.offset) { index, meaning in
-                        Text("\(index + 1). \(meaning)")
-                            .font(.body)
-                    }
-                }
-                
-                Divider()
-                
-                // Parts of speech
-                if !entry.partOfSpeech.isEmpty {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Part of Speech")
-                            .font(.headline)
-                        
-                        Text(entry.partOfSpeech.joined(separator: ", "))
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    Divider()
-                }
-                
-                // Additional info
-                VStack(alignment: .leading, spacing: 4) {
-                    if let frequency = entry.frequency {
-                        Text("Frequency: \(frequency)")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    if let kanji = entry.kanji {
-                        Text("Kanji: \(kanji)")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                
-                Spacer()
-            }
-            .padding()
-        }
-        .navigationTitle("Word Details")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
 #Preview {
     NavigationView {
         DictionaryView()
-            .environmentObject(DictionaryManager())
+            .environmentObject(VocabularyManager())
     }
 }

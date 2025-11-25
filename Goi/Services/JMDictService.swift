@@ -1,212 +1,128 @@
 import Foundation
 import Combine
 
-// MARK: - JMDICT Service
-class JMDictService: ObservableObject {
+// MARK: - Vocabulary Data Service
+class VocabularyDataService: ObservableObject {
     @Published var isLoading = false
-    @Published var error: JMDictError?
+    @Published var error: VocabularyError?
     
-    private let session = URLSession.shared
-    private var cancellables = Set<AnyCancellable>()
+    private let vocabularyKey = "vocabulary_entries"
+    private let backupKey = "vocabulary_backup"
     
-    // MARK: - Mock JMDICT Data
-    // In a real app, you would integrate with actual JMDICT JSON data
-    // For now, we'll use sample data that mimics JMDICT structure
-    
-    func searchWord(_ query: String, completion: @escaping ([JapaneseEntry]) -> Void) {
-        isLoading = true
-        error = nil
-        
-        // Simulate API delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.isLoading = false
+    // MARK: - Data Management
+    func saveVocabulary(_ entries: [VocabularyEntry]) {
+        do {
+            let data = try JSONEncoder().encode(entries)
+            UserDefaults.standard.set(data, forKey: vocabularyKey)
             
-            // Mock search results
-            let results = self.mockJMDictSearch(query)
-            completion(results)
+            // Create backup
+            UserDefaults.standard.set(data, forKey: backupKey)
+            
+            error = nil
+        } catch {
+            self.error = .encodingError
         }
     }
     
-    private func mockJMDictSearch(_ query: String) -> [JapaneseEntry] {
-        let mockEntries = [
-            JapaneseEntry(
-                word: "こんにちは",
-                hiragana: "こんにちは",
-                katakana: nil,
-                romaji: "konnichiwa",
-                meanings: ["hello", "good day", "good afternoon"],
-                partOfSpeech: ["expression", "greeting"],
-                jlptLevel: .n5,
-                frequency: 100,
-                kanji: nil
-            ),
-            JapaneseEntry(
-                word: "学校",
-                hiragana: "がっこう",
-                katakana: nil,
-                romaji: "gakkou",
-                meanings: ["school"],
-                partOfSpeech: ["noun"],
-                jlptLevel: .n5,
-                frequency: 95,
-                kanji: "学校"
-            ),
-            JapaneseEntry(
-                word: "コーヒー",
-                hiragana: nil,
-                katakana: "コーヒー",
-                romaji: "koohii",
-                meanings: ["coffee"],
-                partOfSpeech: ["noun"],
-                jlptLevel: .n5,
-                frequency: 80,
-                kanji: nil
-            ),
-            JapaneseEntry(
-                word: "先生",
-                hiragana: "せんせい",
-                katakana: nil,
-                romaji: "sensei",
-                meanings: ["teacher", "doctor", "master"],
-                partOfSpeech: ["noun"],
-                jlptLevel: .n5,
-                frequency: 85,
-                kanji: "先生"
-            ),
-            JapaneseEntry(
-                word: "食べる",
-                hiragana: "たべる",
-                katakana: nil,
-                romaji: "taberu",
-                meanings: ["to eat"],
-                partOfSpeech: ["ichidan verb", "transitive verb"],
-                jlptLevel: .n5,
-                frequency: 90,
-                kanji: "食べる"
-            )
-        ]
+    func loadVocabulary() -> [VocabularyEntry] {
+        guard let data = UserDefaults.standard.data(forKey: vocabularyKey) else {
+            return []
+        }
         
-        // Filter based on query
-        return mockEntries.filter { entry in
-            entry.word.localizedCaseInsensitiveContains(query) ||
-            entry.romaji.localizedCaseInsensitiveContains(query) ||
-            (entry.hiragana?.localizedCaseInsensitiveContains(query) ?? false) ||
-            (entry.katakana?.localizedCaseInsensitiveContains(query) ?? false) ||
-            entry.meanings.contains { $0.localizedCaseInsensitiveContains(query) }
+        do {
+            let entries = try JSONDecoder().decode([VocabularyEntry].self, from: data)
+            error = nil
+            return entries
+        } catch {
+            self.error = .decodingError
+            
+            // Try to load from backup
+            return loadBackupVocabulary()
         }
     }
     
-    // MARK: - Real JMDICT Integration
-    // Uncomment and implement when you want to use real JMDICT data
-    
-    /*
-    func loadJMDictData() {
-        // Download JMDICT JSON from:
-        // https://github.com/scriptin/jmdict-simplified
-        // Parse and store locally for offline use
-        
-        guard let url = URL(string: "https://raw.githubusercontent.com/scriptin/jmdict-simplified/master/jmdict-eng-3.1.0.json") else {
-            error = .invalidURL
-            return
+    private func loadBackupVocabulary() -> [VocabularyEntry] {
+        guard let data = UserDefaults.standard.data(forKey: backupKey) else {
+            return []
         }
         
-        isLoading = true
-        
-        session.dataTaskPublisher(for: url)
-            .map(\.data)
-            .decode(type: JMDictResponse.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    self.isLoading = false
-                    if case .failure(let error) = completion {
-                        self.error = .networkError(error)
-                    }
-                },
-                receiveValue: { response in
-                    // Process JMDICT data and convert to JapaneseEntry objects
-                    self.processJMDictData(response)
-                }
-            )
-            .store(in: &cancellables)
+        do {
+            return try JSONDecoder().decode([VocabularyEntry].self, from: data)
+        } catch {
+            return []
+        }
     }
     
-    private func processJMDictData(_ response: JMDictResponse) {
-        // Convert JMDICT format to our JapaneseEntry format
-        // This would be implemented based on JMDICT structure
+    // MARK: - Export/Import
+    func exportVocabulary(_ entries: [VocabularyEntry]) -> Data? {
+        do {
+            return try JSONEncoder().encode(entries)
+        } catch {
+            error = .encodingError
+            return nil
+        }
     }
-    */
+    
+    func importVocabulary(from data: Data) -> [VocabularyEntry]? {
+        do {
+            return try JSONDecoder().decode([VocabularyEntry].self, from: data)
+        } catch {
+            error = .decodingError
+            return nil
+        }
+    }
+    
+    // MARK: - Statistics
+    func getVocabularyStats(_ entries: [VocabularyEntry]) -> VocabularyStats {
+        let total = entries.count
+        let withSource = entries.filter { $0.source != nil }.count
+        let jlptLevels = Dictionary(grouping: entries.compactMap { $0.jlptLevel }) { $0 }
+        let recentlyAdded = entries.filter { 
+            Calendar.current.isDate($0.dateAdded, inSameDayAs: Date()) 
+        }.count
+        
+        return VocabularyStats(
+            totalWords: total,
+            wordsWithSource: withSource,
+            jlptDistribution: jlptLevels.mapValues { $0.count },
+            recentlyAdded: recentlyAdded
+        )
+    }
 }
 
 // MARK: - Error Types
-enum JMDictError: Error, LocalizedError {
-    case invalidURL
-    case networkError(Error)
+enum VocabularyError: Error, LocalizedError {
+    case encodingError
     case decodingError
     case noData
+    case exportError
+    case importError
     
     var errorDescription: String? {
         switch self {
-        case .invalidURL:
-            return "Invalid URL"
-        case .networkError(let error):
-            return "Network error: \(error.localizedDescription)"
+        case .encodingError:
+            return "Failed to save vocabulary data"
         case .decodingError:
-            return "Failed to decode data"
+            return "Failed to load vocabulary data"
         case .noData:
-            return "No data available"
+            return "No vocabulary data available"
+        case .exportError:
+            return "Failed to export vocabulary"
+        case .importError:
+            return "Failed to import vocabulary"
         }
     }
 }
 
-// MARK: - JMDICT Response Models
-// These would be used for real JMDICT integration
-struct JMDictResponse: Codable {
-    let version: String
-    let languages: [String]
-    let words: [JMDictWord]
-}
-
-struct JMDictWord: Codable {
-    let id: String
-    let kanji: [JMDictKanji]?
-    let kana: [JMDictKana]
-    let sense: [JMDictSense]
-}
-
-struct JMDictKanji: Codable {
-    let common: Bool?
-    let text: String
-    let tags: [String]?
-}
-
-struct JMDictKana: Codable {
-    let common: Bool?
-    let text: String
-    let tags: [String]?
-    let appliesToKanji: [String]?
-}
-
-struct JMDictSense: Codable {
-    let partOfSpeech: [String]?
-    let appliesTo: [String]?
-    let misc: [String]?
-    let info: [String]?
-    let languageSource: [JMDictLanguageSource]?
-    let dialect: [String]?
-    let gloss: [JMDictGloss]
-}
-
-struct JMDictLanguageSource: Codable {
-    let lang: String?
-    let partial: Bool?
-    let wasei: Bool?
-    let text: String?
-}
-
-struct JMDictGloss: Codable {
-    let lang: String?
-    let gender: String?
-    let type: String?
-    let text: String
+// MARK: - Vocabulary Statistics
+struct VocabularyStats {
+    let totalWords: Int
+    let wordsWithSource: Int
+    let jlptDistribution: [JLPTLevel: Int]
+    let recentlyAdded: Int
+    
+    var sourcePercentage: Double {
+        guard totalWords > 0 else { return 0 }
+        return Double(wordsWithSource) / Double(totalWords) * 100
+    }
 }

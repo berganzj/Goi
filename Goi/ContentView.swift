@@ -7,7 +7,7 @@ struct ContentView: View {
             Image(systemName: "book.japanese")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Goi - Japanese Dictionary")
+            Text("Goi - Japanese Vocabulary Tracker")
         }
         .padding()
     }

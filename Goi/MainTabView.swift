@@ -1,20 +1,20 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @EnvironmentObject var dictionaryManager: DictionaryManager
+    @EnvironmentObject var vocabularyManager: VocabularyManager
     
     var body: some View {
         TabView {
-            DictionaryView()
+            VocabularyListView()
                 .tabItem {
-                    Image(systemName: "book.closed")
-                    Text("Dictionary")
+                    Image(systemName: "list.bullet")
+                    Text("My Words")
                 }
             
-            MangaListView()
+            AddVocabularyView()
                 .tabItem {
-                    Image(systemName: "books.vertical")
-                    Text("Manga")
+                    Image(systemName: "plus.circle")
+                    Text("Add Word")
                 }
             
             SearchView()
@@ -23,12 +23,12 @@ struct MainTabView: View {
                     Text("Search")
                 }
         }
-        .environmentObject(dictionaryManager)
+        .environmentObject(vocabularyManager)
     }
 }
 
 struct SearchView: View {
-    @EnvironmentObject var dictionaryManager: DictionaryManager
+    @EnvironmentObject var vocabularyManager: VocabularyManager
     @State private var searchText = ""
     @State private var inputType: InputType = .romaji
     @State private var showingCustomKeyboard = false
@@ -50,7 +50,7 @@ struct SearchView: View {
                     TextField("Search in \(inputType.displayName)...", text: $searchText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .onChange(of: searchText) { _, newValue in
-                            dictionaryManager.search(newValue, inputType: inputType)
+                            vocabularyManager.search(newValue, inputType: inputType)
                         }
                     
                     if inputType != .romaji {
@@ -62,7 +62,7 @@ struct SearchView: View {
                 .padding(.horizontal)
                 
                 // Results
-                List(dictionaryManager.searchResults) { entry in
+                List(vocabularyManager.searchResults) { entry in
                     VocabularyEntryRowView(entry: entry)
                 }
             }
@@ -79,7 +79,7 @@ struct SearchView: View {
 }
 
 struct VocabularyEntryRowView: View {
-    let entry: JapaneseEntry
+    let entry: VocabularyEntry
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -109,6 +109,13 @@ struct VocabularyEntryRowView: View {
             
             Text(entry.meanings.joined(separator: ", "))
                 .font(.body)
+            
+            if let source = entry.source {
+                Text("Source: \(source)")
+                    .font(.caption2)
+                    .foregroundColor(.blue)
+                    .padding(.top, 2)
+            }
         }
         .padding(.vertical, 2)
     }
@@ -116,5 +123,5 @@ struct VocabularyEntryRowView: View {
 
 #Preview {
     MainTabView()
-        .environmentObject(DictionaryManager())
+        .environmentObject(VocabularyManager())
 }

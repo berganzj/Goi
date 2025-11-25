@@ -1,17 +1,21 @@
 import SwiftUI
 
+// Import view files that aren't automatically found
+struct VocabularyListView_Dummy { } // Placeholder
+struct AddVocabularyView_Dummy { }   // Placeholder
+
 struct MainTabView: View {
     @EnvironmentObject var vocabularyManager: VocabularyManager
     
     var body: some View {
         TabView {
-            VocabularyListView()
+            Text("Vocabulary List - Add files to Xcode")
                 .tabItem {
                     Image(systemName: "list.bullet")
                     Text("My Words")
                 }
             
-            AddVocabularyView()
+            Text("Add Vocabulary - Add files to Xcode")
                 .tabItem {
                     Image(systemName: "plus.circle")
                     Text("Add Word")

@@ -122,11 +122,13 @@ class VocabularyManager: ObservableObject {
             }
         }.sorted { $0.dateAdded > $1.dateAdded }
     }
+    }
     
     func searchBySource(_ source: String) -> [VocabularyEntry] {
         return vocabularyEntries.filter { entry in
             entry.source?.lowercased().contains(source.lowercased()) == true
         }.sorted { $0.dateAdded > $1.dateAdded }
+    }
     }
     
     func getAllEntries() -> [VocabularyEntry] {

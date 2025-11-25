@@ -129,9 +129,9 @@ class VocabularyManager: ObservableObject {
             entry.source?.lowercased().contains(source.lowercased()) == true
         }.sorted { $0.dateAdded > $1.dateAdded }
     }
-    }
     
     func getAllEntries() -> [VocabularyEntry] {
+        return vocabularyEntries.sorted { $0.dateAdded > $1.dateAdded }
     }
 }
 

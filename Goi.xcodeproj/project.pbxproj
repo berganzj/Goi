@@ -16,6 +16,8 @@
 		A20000034ACC001100000034 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000035ACC001100000035 /* DictionaryView.swift */; };
 		A20000038ACC001100000038 /* KanaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000039ACC001100000039 /* KanaKeyboard.swift */; };
 		A20000040ACC001100000040 /* JMDictService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000041ACC001100000041 /* JMDictService.swift */; };
+		A20000042ACC001100000042 /* VocabularyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000043ACC001100000043 /* VocabularyListView.swift */; };
+		A20000044ACC001100000044 /* AddVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000045ACC001100000045 /* AddVocabularyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		A20000035ACC001100000035 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
 		A20000039ACC001100000039 /* KanaKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaKeyboard.swift; sourceTree = "<group>"; };
 		A20000041ACC001100000041 /* JMDictService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMDictService.swift; sourceTree = "<group>"; };
+		A20000043ACC001100000043 /* VocabularyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyListView.swift; sourceTree = "<group>"; };
+		A20000045ACC001100000045 /* AddVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				A20000035ACC001100000035 /* DictionaryView.swift */,
+				A20000043ACC001100000043 /* VocabularyListView.swift */,
+				A20000045ACC001100000045 /* AddVocabularyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -187,6 +193,8 @@
 				A20000034ACC001100000034 /* DictionaryView.swift in Sources */,
 				A20000038ACC001100000038 /* KanaKeyboard.swift in Sources */,
 				A20000040ACC001100000040 /* JMDictService.swift in Sources */,
+				A20000042ACC001100000042 /* VocabularyListView.swift in Sources */,
+				A20000044ACC001100000044 /* AddVocabularyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

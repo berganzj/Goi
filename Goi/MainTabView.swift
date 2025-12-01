@@ -1,21 +1,17 @@
 import SwiftUI
 
-// Import view files that aren't automatically found
-struct VocabularyListView_Dummy { } // Placeholder
-struct AddVocabularyView_Dummy { }   // Placeholder
-
 struct MainTabView: View {
     @EnvironmentObject var vocabularyManager: VocabularyManager
     
     var body: some View {
         TabView {
-            Text("Vocabulary List - Add files to Xcode")
+            VocabularyListView()
                 .tabItem {
                     Image(systemName: "list.bullet")
                     Text("My Words")
                 }
             
-            Text("Add Vocabulary - Add files to Xcode")
+            AddVocabularyView()
                 .tabItem {
                     Image(systemName: "plus.circle")
                     Text("Add Word")
@@ -33,9 +29,11 @@ struct MainTabView: View {
 
 struct SearchView: View {
     @EnvironmentObject var vocabularyManager: VocabularyManager
+    @StateObject private var dictionaryService = JMDictService()
     @State private var searchText = ""
     @State private var inputType: InputType = .romaji
     @State private var showingCustomKeyboard = false
+    @State private var dictionaryResults: [JapaneseEntry] = []
     
     var body: some View {
         NavigationView {
@@ -51,10 +49,10 @@ struct SearchView: View {
                 
                 // Search input
                 HStack {
-                    TextField("Search in \(inputType.displayName)...", text: $searchText)
+                    TextField("Search dictionary for \(inputType.displayName.lowercased())...", text: $searchText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .onChange(of: searchText) { _, newValue in
-                            vocabularyManager.search(newValue, inputType: inputType)
+                            searchDictionary(newValue)
                         }
                     
                     if inputType != .romaji {
@@ -66,17 +64,136 @@ struct SearchView: View {
                 .padding(.horizontal)
                 
                 // Results
-                List(vocabularyManager.searchResults) { entry in
-                    VocabularyEntryRowView(entry: entry)
+                if dictionaryResults.isEmpty && !searchText.isEmpty {
+                    VStack(spacing: 12) {
+                        Spacer()
+                        Image(systemName: "magnifyingglass")
+                            .font(.system(size: 40))
+                            .foregroundColor(.gray.opacity(0.5))
+                        Text("No results found for \"\(searchText)\"")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    .padding()
+                } else if dictionaryResults.isEmpty && searchText.isEmpty {
+                    VStack(spacing: 12) {
+                        Spacer()
+                        Image(systemName: "book.closed")
+                            .font(.system(size: 40))
+                            .foregroundColor(.gray.opacity(0.5))
+                        Text("Search for Japanese words")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                        Text("Try searching for 'hello', 'no', or 'yes'")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    .padding()
+                } else {
+                    List(dictionaryResults) { entry in
+                        DictionaryEntryRowView(entry: entry, vocabularyManager: vocabularyManager)
+                    }
                 }
             }
-            .navigationTitle("Search")
+            .navigationTitle("Dictionary Search")
             .sheet(isPresented: $showingCustomKeyboard) {
                 KanaKeyboardView(
                     text: $searchText,
                     keyboardType: inputType.keyboardType,
                     isPresented: $showingCustomKeyboard
                 )
+            }
+        }
+    }
+    
+    private func searchDictionary(_ query: String) {
+        guard !query.isEmpty else {
+            dictionaryResults = []
+            return
+        }
+        
+        dictionaryService.searchWord(query) { results in
+            DispatchQueue.main.async {
+                self.dictionaryResults = results
+            }
+        }
+    }
+}
+
+struct DictionaryEntryRowView: View {
+    let entry: JapaneseEntry
+    let vocabularyManager: VocabularyManager
+    @State private var isAdded = false
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text(entry.word)
+                        .font(.headline)
+                    
+                    if let level = entry.jlptLevel {
+                        Text(level.rawValue)
+                            .font(.caption)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.blue.opacity(0.2))
+                            .cornerRadius(4)
+                    }
+                    
+                    Spacer()
+                }
+                
+                if let hiragana = entry.hiragana {
+                    Text(hiragana)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                Text(entry.romaji)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Text(entry.meanings.joined(separator: ", "))
+                    .font(.body)
+            }
+            
+            Spacer()
+            
+            Button(action: {
+                addToVocabulary()
+            }) {
+                Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle")
+                    .font(.title2)
+                    .foregroundColor(isAdded ? .green : .blue)
+            }
+            .disabled(isAdded)
+        }
+        .padding(.vertical, 2)
+    }
+    
+    private func addToVocabulary() {
+        let vocabularyEntry = VocabularyEntry(
+            word: entry.word,
+            hiragana: entry.hiragana,
+            katakana: entry.katakana,
+            romaji: entry.romaji,
+            meanings: entry.meanings,
+            partOfSpeech: entry.partOfSpeech,
+            jlptLevel: entry.jlptLevel
+        )
+        
+        vocabularyManager.addEntry(vocabularyEntry)
+        withAnimation {
+            isAdded = true
+        }
+        
+        // Reset after 2 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation {
+                isAdded = false
             }
         }
     }

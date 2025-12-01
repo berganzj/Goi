@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AddVocabularyView: View {
     @EnvironmentObject var vocabularyManager: VocabularyManager
+    @StateObject private var dictionaryService = JMDictService()
     @Environment(\.dismiss) private var dismiss
     
     @State private var word = ""
@@ -15,6 +16,8 @@ struct AddVocabularyView: View {
     @State private var showingKanaKeyboard = false
     @State private var activeKanaField: KanaField?
     @State private var showingSuccessAlert = false
+    @State private var dictionaryResults: [JapaneseEntry] = []
+    @State private var showingDictionaryResults = false
     
     enum KanaField {
         case word, hiragana, katakana
@@ -33,10 +36,54 @@ struct AddVocabularyView: View {
                         HStack {
                             TextField("Enter Japanese word", text: $word)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .onChange(of: word) { _, newValue in
+                                    if !newValue.isEmpty && newValue.count > 1 {
+                                        searchDictionary(query: newValue)
+                                    }
+                                }
                             
                             Button("⌨️") {
                                 activeKanaField = .word
                                 showingKanaKeyboard = true
+                            }
+                            .buttonStyle(.borderless)
+                        }
+                        
+                        // Dictionary lookup results
+                        if showingDictionaryResults && !dictionaryResults.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Dictionary Suggestions:")
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                
+                                ForEach(dictionaryResults.prefix(3)) { entry in
+                                    Button(action: {
+                                        fillFromDictionaryEntry(entry)
+                                    }) {
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            HStack {
+                                                Text(entry.word)
+                                                    .font(.body)
+                                                    .fontWeight(.medium)
+                                                Spacer()
+                                                Text("Tap to use")
+                                                    .font(.caption)
+                                                    .foregroundColor(.blue)
+                                            }
+                                            Text(entry.romaji)
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                            Text(entry.meanings.prefix(2).joined(separator: ", "))
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 8)
+                                        .background(Color(.systemGray6))
+                                        .cornerRadius(8)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
                             }
                         }
                     }
@@ -258,6 +305,28 @@ struct AddVocabularyView: View {
         partOfSpeech = ""
         selectedJLPTLevel = nil
         source = ""
+        dictionaryResults = []
+        showingDictionaryResults = false
+    }
+    
+    private func searchDictionary(query: String) {
+        dictionaryService.searchWord(query) { results in
+            DispatchQueue.main.async {
+                self.dictionaryResults = results
+                self.showingDictionaryResults = !results.isEmpty
+            }
+        }
+    }
+    
+    private func fillFromDictionaryEntry(_ entry: JapaneseEntry) {
+        word = entry.word
+        hiragana = entry.hiragana ?? ""
+        katakana = entry.katakana ?? ""
+        romaji = entry.romaji
+        meanings = entry.meanings.isEmpty ? [""] : entry.meanings
+        partOfSpeech = entry.partOfSpeech.joined(separator: ", ")
+        selectedJLPTLevel = entry.jlptLevel
+        showingDictionaryResults = false
     }
 }
 

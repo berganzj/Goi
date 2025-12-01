@@ -52,19 +52,44 @@ struct VocabularyListView: View {
                 }
                 
                 // Vocabulary entries list
-                List {
-                    Section {
-                        ForEach(filteredEntries) { entry in
-                            NavigationLink(destination: VocabularyDetailView(entry: entry)) {
-                                VocabularyEntryRowView(entry: entry)
-                            }
+                if filteredEntries.isEmpty && searchText.isEmpty {
+                    // Empty state
+                    VStack(spacing: 20) {
+                        Spacer()
+                        
+                        Image(systemName: "book.closed")
+                            .font(.system(size: 60))
+                            .foregroundColor(.gray.opacity(0.5))
+                        
+                        VStack(spacing: 8) {
+                            Text("Start Building Your Vocabulary!")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            Text("Add your first Japanese word using the \"Add Word\" tab below")
+                                .font(.body)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
                         }
-                        .onDelete(perform: deleteEntries)
-                    } header: {
-                        if !searchText.isEmpty {
-                            Text("\(filteredEntries.count) results")
-                        } else {
-                            Text("My Vocabulary (\(filteredEntries.count))")
+                        
+                        Spacer()
+                    }
+                    .padding()
+                } else {
+                    List {
+                        Section {
+                            ForEach(filteredEntries) { entry in
+                                NavigationLink(destination: VocabularyDetailView(entry: entry)) {
+                                    VocabularyEntryRowView(entry: entry)
+                                }
+                            }
+                            .onDelete(perform: deleteEntries)
+                        } header: {
+                            if !searchText.isEmpty {
+                                Text("\(filteredEntries.count) results")
+                            } else {
+                                Text("My Vocabulary (\(filteredEntries.count))")
+                            }
                         }
                     }
                 }

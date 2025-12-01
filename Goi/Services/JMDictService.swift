@@ -41,6 +41,39 @@ class JMDictService: ObservableObject {
                 kanji: nil
             ),
             JapaneseEntry(
+                word: "いいえ",
+                hiragana: "いいえ",
+                katakana: nil,
+                romaji: "iie",
+                meanings: ["no", "nope"],
+                partOfSpeech: ["expression"],
+                jlptLevel: .n5,
+                frequency: 95,
+                kanji: nil
+            ),
+            JapaneseEntry(
+                word: "はい",
+                hiragana: "はい",
+                katakana: nil,
+                romaji: "hai",
+                meanings: ["yes", "yeah"],
+                partOfSpeech: ["expression"],
+                jlptLevel: .n5,
+                frequency: 98,
+                kanji: nil
+            ),
+            JapaneseEntry(
+                word: "ありがとう",
+                hiragana: "ありがとう",
+                katakana: nil,
+                romaji: "arigatou",
+                meanings: ["thank you", "thanks"],
+                partOfSpeech: ["expression"],
+                jlptLevel: .n5,
+                frequency: 97,
+                kanji: nil
+            ),
+            JapaneseEntry(
                 word: "学校",
                 hiragana: "がっこう",
                 katakana: nil,

@@ -95,12 +95,12 @@ class JMDictService: ObservableObject {
         let lowercaseQuery = query.lowercased()
         
         return coreVocabulary.filter { entry in
-            entry.word.localizedCaseInsensitiveContains(query) ||
-            entry.romaji.localizedCaseInsensitiveContains(query) ||
-            (entry.hiragana?.localizedCaseInsensitiveContains(query) ?? false) ||
-            (entry.katakana?.localizedCaseInsensitiveContains(query) ?? false) ||
-            entry.meanings.contains { $0.localizedCaseInsensitiveContains(query) } ||
-            (entry.kanji?.localizedCaseInsensitiveContains(query) ?? false)
+            entry.word.localizedCaseInsensitiveContains(lowercaseQuery) ||
+            entry.romaji.localizedCaseInsensitiveContains(lowercaseQuery) ||
+            (entry.hiragana?.localizedCaseInsensitiveContains(lowercaseQuery) ?? false) ||
+            (entry.katakana?.localizedCaseInsensitiveContains(lowercaseQuery) ?? false) ||
+            entry.meanings.contains { $0.localizedCaseInsensitiveContains(lowercaseQuery) } ||
+            (entry.kanji?.localizedCaseInsensitiveContains(lowercaseQuery) ?? false)
         }
     }
     

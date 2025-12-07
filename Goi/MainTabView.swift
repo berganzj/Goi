@@ -185,9 +185,11 @@ struct DictionaryEntryRowView: View {
             jlptLevel: entry.jlptLevel
         )
         
-        vocabularyManager.addEntry(vocabularyEntry)
-        withAnimation {
-            isAdded = true
+        let success = vocabularyManager.addEntry(vocabularyEntry)
+        if success {
+            withAnimation {
+                isAdded = true
+            }
         }
         
         // Reset after 2 seconds

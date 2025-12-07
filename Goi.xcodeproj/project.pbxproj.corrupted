@@ -186,8 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A20000007ACC001100000007 /* Preview Assets.xcassets in Resources */,
-				A20000005ACC001100000005 /* Assets.xcassets in Resources */,
-				A20000046ACC001100000046 /* CoreVocabulary.json in Resources */,
+				A20000005ACC001100000005 /* Assets.xcassets in Resources */,\n				A20000046ACC001100000046 /* CoreVocabulary.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

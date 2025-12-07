@@ -1,0 +1,444 @@
+[
+  {
+    "word": "熊",
+    "hiragana": "くま",
+    "romaji": "kuma",
+    "meanings": ["bear"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "熊"
+  },
+  {
+    "word": "猫",
+    "hiragana": "ねこ",
+    "romaji": "neko", 
+    "meanings": ["cat"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "猫"
+  },
+  {
+    "word": "犬",
+    "hiragana": "いぬ",
+    "romaji": "inu",
+    "meanings": ["dog"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5", 
+    "kanji": "犬"
+  },
+  {
+    "word": "鳥",
+    "hiragana": "とり",
+    "romaji": "tori",
+    "meanings": ["bird"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N4",
+    "kanji": "鳥"
+  },
+  {
+    "word": "魚",
+    "hiragana": "さかな",
+    "romaji": "sakana",
+    "meanings": ["fish"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "魚"
+  },
+  {
+    "word": "馬",
+    "hiragana": "うま",
+    "romaji": "uma",
+    "meanings": ["horse"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "馬"
+  },
+  {
+    "word": "象",
+    "hiragana": "ぞう",
+    "romaji": "zou",
+    "meanings": ["elephant"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "象"
+  },
+  {
+    "word": "蛇",
+    "hiragana": "へび",
+    "romaji": "hebi",
+    "meanings": ["snake"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "蛇"
+  },
+  {
+    "word": "虎",
+    "hiragana": "とら",
+    "romaji": "tora",
+    "meanings": ["tiger"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "虎"
+  },
+  {
+    "word": "狼",
+    "hiragana": "おおかみ",
+    "romaji": "ookami",
+    "meanings": ["wolf"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "狼"
+  },
+  {
+    "word": "羊",
+    "hiragana": "ひつじ",
+    "romaji": "hitsuji",
+    "meanings": ["sheep"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "羊"
+  },
+  {
+    "word": "牛",
+    "hiragana": "うし",
+    "romaji": "ushi",
+    "meanings": ["cow", "cattle"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N4",
+    "kanji": "牛"
+  },
+  {
+    "word": "豚",
+    "hiragana": "ぶた",
+    "romaji": "buta",
+    "meanings": ["pig"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "豚"
+  },
+  {
+    "word": "兎",
+    "hiragana": "うさぎ",
+    "romaji": "usagi",
+    "meanings": ["rabbit"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "兎"
+  },
+  {
+    "word": "猿",
+    "hiragana": "さる",
+    "romaji": "saru",
+    "meanings": ["monkey"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "猿"
+  },
+  {
+    "word": "亀",
+    "hiragana": "かめ",
+    "romaji": "kame",
+    "meanings": ["turtle", "tortoise"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "亀"
+  },
+  {
+    "word": "蛙",
+    "hiragana": "かえる",
+    "romaji": "kaeru",
+    "meanings": ["frog"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "蛙"
+  },
+  {
+    "word": "蝶",
+    "hiragana": "ちょう",
+    "romaji": "chou",
+    "meanings": ["butterfly"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "蝶"
+  },
+  {
+    "word": "蜂",
+    "hiragana": "はち",
+    "romaji": "hachi",
+    "meanings": ["bee", "wasp"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "蜂"
+  },
+  {
+    "word": "蟻",
+    "hiragana": "あり",
+    "romaji": "ari",
+    "meanings": ["ant"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "蟻"
+  },
+  {
+    "word": "蜘蛛",
+    "hiragana": "くも",
+    "romaji": "kumo",
+    "meanings": ["spider"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "蜘蛛"
+  },
+  {
+    "word": "鷹",
+    "hiragana": "たか",
+    "romaji": "taka",
+    "meanings": ["hawk", "falcon"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "鷹"
+  },
+  {
+    "word": "鷲",
+    "hiragana": "わし",
+    "romaji": "washi",
+    "meanings": ["eagle"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "鷲"
+  },
+  {
+    "word": "鴨",
+    "hiragana": "かも",
+    "romaji": "kamo",
+    "meanings": ["duck"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "鴨"
+  },
+  {
+    "word": "鶏",
+    "hiragana": "にわとり",
+    "romaji": "niwatori",
+    "meanings": ["chicken", "rooster"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "鶏"
+  },
+  {
+    "word": "鯨",
+    "hiragana": "くじら",
+    "romaji": "kujira",
+    "meanings": ["whale"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "鯨"
+  },
+  {
+    "word": "海豚",
+    "hiragana": "いるか",
+    "romaji": "iruka",
+    "meanings": ["dolphin"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "海豚"
+  },
+  {
+    "word": "鮫",
+    "hiragana": "さめ",
+    "romaji": "same",
+    "meanings": ["shark"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "鮫"
+  },
+  {
+    "word": "鯉",
+    "hiragana": "こい",
+    "romaji": "koi",
+    "meanings": ["carp"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "鯉"
+  },
+  {
+    "word": "蝦",
+    "hiragana": "えび",
+    "romaji": "ebi",
+    "meanings": ["shrimp", "prawn"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "蝦"
+  },
+  {
+    "word": "蟹",
+    "hiragana": "かに",
+    "romaji": "kani",
+    "meanings": ["crab"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "蟹"
+  },
+  {
+    "word": "蛸",
+    "hiragana": "たこ",
+    "romaji": "tako",
+    "meanings": ["octopus"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "蛸"
+  },
+  {
+    "word": "鹿",
+    "hiragana": "しか",
+    "romaji": "shika",
+    "meanings": ["deer"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "鹿"
+  },
+  {
+    "word": "狐",
+    "hiragana": "きつね",
+    "romaji": "kitsune",
+    "meanings": ["fox"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "狐"
+  },
+  {
+    "word": "狸",
+    "hiragana": "たぬき",
+    "romaji": "tanuki",
+    "meanings": ["raccoon dog", "tanuki"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "狸"
+  },
+  {
+    "word": "獅子",
+    "hiragana": "しし",
+    "romaji": "shishi",
+    "meanings": ["lion"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "獅子"
+  },
+  {
+    "word": "麒麟",
+    "hiragana": "きりん",
+    "romaji": "kirin",
+    "meanings": ["giraffe"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "麒麟"
+  },
+  {
+    "word": "河馬",
+    "hiragana": "かば",
+    "romaji": "kaba",
+    "meanings": ["hippopotamus"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "河馬"
+  },
+  {
+    "word": "駱駝",
+    "hiragana": "らくだ",
+    "romaji": "rakuda",
+    "meanings": ["camel"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "駱駝"
+  },
+  {
+    "word": "鼠",
+    "hiragana": "ねずみ",
+    "romaji": "nezumi",
+    "meanings": ["mouse", "rat"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "鼠"
+  },
+  {
+    "word": "蝙蝠",
+    "hiragana": "こうもり",
+    "romaji": "koumori",
+    "meanings": ["bat"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "蝙蝠"
+  },
+  {
+    "word": "穴熊",
+    "hiragana": "あなぐま",
+    "romaji": "anaguma",
+    "meanings": ["badger"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "穴熊"
+  },
+  {
+    "word": "栗鼠",
+    "hiragana": "りす",
+    "romaji": "risu",
+    "meanings": ["squirrel"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "栗鼠"
+  },
+  {
+    "word": "野猪",
+    "hiragana": "いのしし",
+    "romaji": "inoshishi",
+    "meanings": ["wild boar"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "野猪"
+  },
+  {
+    "word": "熊猫",
+    "hiragana": "パンダ",
+    "katakana": "パンダ",
+    "romaji": "panda",
+    "meanings": ["panda"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N3",
+    "kanji": "熊猫"
+  },
+  {
+    "word": "孔雀",
+    "hiragana": "くじゃく",
+    "romaji": "kujaku",
+    "meanings": ["peacock"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "孔雀"
+  },
+  {
+    "word": "駝鳥",
+    "hiragana": "だちょう",
+    "romaji": "dachou",
+    "meanings": ["ostrich"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "駝鳥"
+  },
+  {
+    "word": "海星",
+    "hiragana": "ひとで",
+    "romaji": "hitode",
+    "meanings": ["starfish"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "海星"
+  },
+  {
+    "word": "水母",
+    "hiragana": "くらげ",
+    "romaji": "kurage",
+    "meanings": ["jellyfish"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N2",
+    "kanji": "水母"
+  }
+]

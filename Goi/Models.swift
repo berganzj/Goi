@@ -82,9 +82,26 @@ class VocabularyManager: ObservableObject {
     }
     
     // MARK: - Vocabulary Management
-    func addEntry(_ entry: VocabularyEntry) {
+    func addEntry(_ entry: VocabularyEntry) -> Bool {
+        // Check for duplicates
+        if hasDuplicate(entry) {
+            return false
+        }
         vocabularyEntries.append(entry)
         saveEntries()
+        return true
+    }
+    
+    func hasDuplicate(_ entry: VocabularyEntry) -> Bool {
+        return vocabularyEntries.contains { existingEntry in
+            // Check if word, romaji, or kana matches
+            existingEntry.word.lowercased() == entry.word.lowercased() ||
+            existingEntry.romaji.lowercased() == entry.romaji.lowercased() ||
+            (existingEntry.hiragana != nil && entry.hiragana != nil && 
+             existingEntry.hiragana!.lowercased() == entry.hiragana!.lowercased()) ||
+            (existingEntry.katakana != nil && entry.katakana != nil && 
+             existingEntry.katakana!.lowercased() == entry.katakana!.lowercased())
+        }
     }
     
     func updateEntry(_ entry: VocabularyEntry) {

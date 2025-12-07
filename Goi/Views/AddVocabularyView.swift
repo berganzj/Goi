@@ -18,6 +18,8 @@ struct AddVocabularyView: View {
     @State private var showingSuccessAlert = false
     @State private var dictionaryResults: [JapaneseEntry] = []
     @State private var showingDictionaryResults = false
+    @State private var showingDuplicateAlert = false
+    @State private var duplicateMessage = ""
     
     enum KanaField {
         case word, hiragana, katakana
@@ -239,6 +241,13 @@ struct AddVocabularyView: View {
             } message: {
                 Text("'\(word)' has been added to your vocabulary!")
             }
+            .alert("Duplicate Word", isPresented: $showingDuplicateAlert) {
+                Button("OK") {
+                    // Just dismiss the alert
+                }
+            } message: {
+                Text(duplicateMessage)
+            }
         }
     }
     
@@ -292,8 +301,13 @@ struct AddVocabularyView: View {
             source: source.isEmpty ? nil : source
         )
         
-        vocabularyManager.addEntry(entry)
-        showingSuccessAlert = true
+        let success = vocabularyManager.addEntry(entry)
+        if success {
+            showingSuccessAlert = true
+        } else {
+            duplicateMessage = "This word already exists in your vocabulary. Try a different word or check your existing entries."
+            showingDuplicateAlert = true
+        }
     }
     
     private func clearForm() {

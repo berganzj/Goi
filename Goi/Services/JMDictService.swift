@@ -9,125 +9,118 @@ class JMDictService: ObservableObject {
     private let session = URLSession.shared
     private var cancellables = Set<AnyCancellable>()
     
-    // MARK: - Mock JMDICT Data
-    // In a real app, you would integrate with actual JMDICT JSON data
-    // For now, we'll use sample data that mimics JMDICT structure
+    // Core vocabulary loaded from bundled JSON
+    private var coreVocabulary: [JapaneseEntry] = []
+    
+    // Cache for API results to avoid repeated requests
+    private var apiCache: [String: [JapaneseEntry]] = [:]
+    
+    init() {
+        loadCoreVocabulary()
+    }
+    
+    
+    // MARK: - Core Vocabulary Loading
+    private func loadCoreVocabulary() {
+        guard let url = Bundle.main.url(forResource: "CoreVocabulary", withExtension: "json"),
+              let data = try? Data(contentsOf: url) else {
+            print("Failed to load CoreVocabulary.json")
+            return
+        }
+        
+        do {
+            struct VocabEntry: Codable {
+                let word: String
+                let hiragana: String?
+                let katakana: String?
+                let romaji: String
+                let meanings: [String]
+                let partOfSpeech: [String]
+                let jlptLevel: String?
+                let kanji: String?
+            }
+            
+            let entries = try JSONDecoder().decode([VocabEntry].self, from: data)
+            coreVocabulary = entries.map { entry in
+                JapaneseEntry(
+                    word: entry.word,
+                    hiragana: entry.hiragana,
+                    katakana: entry.katakana,
+                    romaji: entry.romaji,
+                    meanings: entry.meanings,
+                    partOfSpeech: entry.partOfSpeech,
+                    jlptLevel: JLPTLevel(rawValue: entry.jlptLevel ?? "N5"),
+                    frequency: nil,
+                    kanji: entry.kanji
+                )
+            }
+            print("Loaded \(coreVocabulary.count) core vocabulary entries")
+        } catch {
+            print("Failed to decode CoreVocabulary.json: \(error)")
+        }
+    }
     
     func searchWord(_ query: String, completion: @escaping ([JapaneseEntry]) -> Void) {
         isLoading = true
         error = nil
         
-        // Simulate API delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.isLoading = false
-            
-            // Mock search results
-            let results = self.mockJMDictSearch(query)
-            completion(results)
+        // First, search core vocabulary
+        let coreResults = searchCoreVocabulary(query)
+        
+        if !coreResults.isEmpty {
+            // Found results in core vocabulary
+            isLoading = false
+            completion(coreResults)
+            return
+        }
+        
+        // Check cache for API results
+        if let cachedResults = apiCache[query.lowercased()] {
+            isLoading = false
+            completion(cachedResults)
+            return
+        }
+        
+        // Fall back to JMDICT API for broader search
+        searchJMDictAPI(query) { [weak self] results in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                self?.apiCache[query.lowercased()] = results
+                completion(results)
+            }
         }
     }
     
-    private func mockJMDictSearch(_ query: String) -> [JapaneseEntry] {
-        let mockEntries = [
-            JapaneseEntry(
-                word: "こんにちは",
-                hiragana: "こんにちは",
-                katakana: nil,
-                romaji: "konnichiwa",
-                meanings: ["hello", "good day", "good afternoon"],
-                partOfSpeech: ["expression", "greeting"],
-                jlptLevel: .n5,
-                frequency: 100,
-                kanji: nil
-            ),
-            JapaneseEntry(
-                word: "いいえ",
-                hiragana: "いいえ",
-                katakana: nil,
-                romaji: "iie",
-                meanings: ["no", "nope"],
-                partOfSpeech: ["expression"],
-                jlptLevel: .n5,
-                frequency: 95,
-                kanji: nil
-            ),
-            JapaneseEntry(
-                word: "はい",
-                hiragana: "はい",
-                katakana: nil,
-                romaji: "hai",
-                meanings: ["yes", "yeah"],
-                partOfSpeech: ["expression"],
-                jlptLevel: .n5,
-                frequency: 98,
-                kanji: nil
-            ),
-            JapaneseEntry(
-                word: "ありがとう",
-                hiragana: "ありがとう",
-                katakana: nil,
-                romaji: "arigatou",
-                meanings: ["thank you", "thanks"],
-                partOfSpeech: ["expression"],
-                jlptLevel: .n5,
-                frequency: 97,
-                kanji: nil
-            ),
-            JapaneseEntry(
-                word: "学校",
-                hiragana: "がっこう",
-                katakana: nil,
-                romaji: "gakkou",
-                meanings: ["school"],
-                partOfSpeech: ["noun"],
-                jlptLevel: .n5,
-                frequency: 95,
-                kanji: "学校"
-            ),
-            JapaneseEntry(
-                word: "コーヒー",
-                hiragana: nil,
-                katakana: "コーヒー",
-                romaji: "koohii",
-                meanings: ["coffee"],
-                partOfSpeech: ["noun"],
-                jlptLevel: .n5,
-                frequency: 80,
-                kanji: nil
-            ),
-            JapaneseEntry(
-                word: "先生",
-                hiragana: "せんせい",
-                katakana: nil,
-                romaji: "sensei",
-                meanings: ["teacher", "doctor", "master"],
-                partOfSpeech: ["noun"],
-                jlptLevel: .n5,
-                frequency: 85,
-                kanji: "先生"
-            ),
-            JapaneseEntry(
-                word: "食べる",
-                hiragana: "たべる",
-                katakana: nil,
-                romaji: "taberu",
-                meanings: ["to eat"],
-                partOfSpeech: ["ichidan verb", "transitive verb"],
-                jlptLevel: .n5,
-                frequency: 90,
-                kanji: "食べる"
-            )
-        ]
+    private func searchCoreVocabulary(_ query: String) -> [JapaneseEntry] {
+        let lowercaseQuery = query.lowercased()
         
-        // Filter based on query
-        return mockEntries.filter { entry in
+        return coreVocabulary.filter { entry in
             entry.word.localizedCaseInsensitiveContains(query) ||
             entry.romaji.localizedCaseInsensitiveContains(query) ||
             (entry.hiragana?.localizedCaseInsensitiveContains(query) ?? false) ||
             (entry.katakana?.localizedCaseInsensitiveContains(query) ?? false) ||
-            entry.meanings.contains { $0.localizedCaseInsensitiveContains(query) }
+            entry.meanings.contains { $0.localizedCaseInsensitiveContains(query) } ||
+            (entry.kanji?.localizedCaseInsensitiveContains(query) ?? false)
         }
     }
+    
+    private func searchJMDictAPI(_ query: String, completion: @escaping ([JapaneseEntry]) -> Void) {
+        // For now, return empty results since we don't have API access
+        // In a real implementation, this would query the JMDICT API
+        print("Searching JMDICT API for: \(query)")
+        
+        // Simulate API delay
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
+            completion([])
+        }
+    }
+    
+    
+    // MARK: - Future JMDICT API Integration
+    // For production use, implement real JMDICT API calls here:
+    // - https://jisho.org/api/ (unofficial but popular)
+    // - Local JMDICT JSON processing
+    // - Other Japanese dictionary APIs
     
     // MARK: - Real JMDICT Integration
     // Uncomment and implement when you want to use real JMDICT data

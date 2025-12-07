@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+
+import xml.etree.ElementTree as ET
+import os
+
+def create_hiragana_icon():
+    # Create SVG with hiragana ごい
+    svg_content = '''<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7B68EE;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#grad1)" rx="200" ry="200"/>
+  <text x="512" y="600" font-family="Hiragino Sans, Arial Unicode MS, sans-serif" 
+        font-size="400" font-weight="bold" text-anchor="middle" fill="white">ごい</text>
+</svg>'''
+    
+    with open('icon_hiragana.svg', 'w', encoding='utf-8') as f:
+        f.write(svg_content)
+    
+    print("Created icon_hiragana.svg with ごい (hiragana)")
+
+if __name__ == "__main__":
+    create_hiragana_icon()

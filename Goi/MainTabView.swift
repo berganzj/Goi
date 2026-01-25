@@ -133,7 +133,6 @@ struct SearchView: View {
                     }
                 }
             }
-            }
             .navigationTitle("Dictionary Search")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -166,7 +165,7 @@ struct SearchView: View {
         
         dictionaryService.searchWord(query) { results in
             DispatchQueue.main.async {
-                self.dictionaryResults = results
+                dictionaryResults = results
             }
         }
     }

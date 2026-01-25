@@ -27,198 +27,266 @@ struct AddVocabularyView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    
-                    // Main word input
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Word")
-                            .font(.headline)
+            ZStack {
+                // Gradient background
+                LinearGradient(
+                    colors: [
+                        Color.blue.opacity(0.1),
+                        Color.purple.opacity(0.1),
+                        Color.pink.opacity(0.05)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
                         
-                        HStack {
-                            TextField("Enter Japanese word", text: $word)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .onChange(of: word) { _, newValue in
-                                    if !newValue.isEmpty && newValue.count > 1 {
-                                        searchDictionary(query: newValue)
-                                    }
-                                }
-                            
-                            Button("⌨️") {
-                                activeKanaField = .word
-                                showingKanaKeyboard = true
-                            }
-                            .buttonStyle(.borderless)
-                        }
-                        
-                        // Dictionary lookup results
-                        if showingDictionaryResults && !dictionaryResults.isEmpty {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("Dictionary Suggestions:")
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
+                        // Main word input
+                        GlassContainer(cornerRadius: 16, padding: 16) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Word")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
                                 
-                                ForEach(dictionaryResults.prefix(3)) { entry in
-                                    Button(action: {
-                                        fillFromDictionaryEntry(entry)
-                                    }) {
-                                        VStack(alignment: .leading, spacing: 4) {
-                                            HStack {
-                                                Text(entry.word)
-                                                    .font(.body)
-                                                    .fontWeight(.medium)
-                                                Spacer()
-                                                Text("Tap to use")
-                                                    .font(.caption)
-                                                    .foregroundColor(.blue)
+                                HStack(spacing: 12) {
+                                    TextField("Enter Japanese word", text: $word)
+                                        .glassTextField()
+                                        .onChange(of: word) { _, newValue in
+                                            if !newValue.isEmpty && newValue.count > 1 {
+                                                searchDictionary(query: newValue)
                                             }
-                                            Text(entry.romaji)
-                                                .font(.caption)
-                                                .foregroundColor(.secondary)
-                                            Text(entry.meanings.prefix(2).joined(separator: ", "))
-                                                .font(.caption)
-                                                .foregroundColor(.secondary)
                                         }
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 8)
-                                        .background(Color(.systemGray6))
-                                        .cornerRadius(8)
+                                    
+                                    Button(action: {
+                                        activeKanaField = .word
+                                        showingKanaKeyboard = true
+                                    }) {
+                                        Text("⌨️")
+                                            .font(.title2)
+                                            .frame(width: 50, height: 50)
+                                            .glassCard(cornerRadius: 12)
                                     }
-                                    .buttonStyle(.plain)
+                                }
+                        
+                                // Dictionary lookup results
+                                if showingDictionaryResults && !dictionaryResults.isEmpty {
+                                    VStack(alignment: .leading, spacing: 12) {
+                                        Text("Dictionary Suggestions:")
+                                            .font(.subheadline)
+                                            .fontWeight(.semibold)
+                                        
+                                        ForEach(dictionaryResults.prefix(3)) { entry in
+                                            Button(action: {
+                                                fillFromDictionaryEntry(entry)
+                                            }) {
+                                                GlassContainer(cornerRadius: 12, padding: 12) {
+                                                    VStack(alignment: .leading, spacing: 6) {
+                                                        HStack {
+                                                            Text(entry.word)
+                                                                .font(.body)
+                                                                .fontWeight(.semibold)
+                                                            Spacer()
+                                                            Text("Tap to use")
+                                                                .font(.caption)
+                                                                .foregroundColor(.blue)
+                                                        }
+                                                        Text(entry.romaji)
+                                                            .font(.caption)
+                                                            .foregroundColor(.secondary)
+                                                        Text(entry.meanings.prefix(2).joined(separator: ", "))
+                                                            .font(.caption)
+                                                            .foregroundColor(.secondary)
+                                                    }
+                                                }
+                                            }
+                                            .buttonStyle(.plain)
+                                        }
+                                    }
+                                    .padding(.top, 8)
                                 }
                             }
                         }
-                    }
                     
-                    // Kana inputs
-                    HStack(spacing: 16) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Hiragana")
-                                .font(.subheadline)
-                            
-                            HStack {
-                                TextField("ひらがな", text: $hiragana)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                
-                                Button("あ") {
-                                    activeKanaField = .hiragana
-                                    showingKanaKeyboard = true
+                        // Kana inputs
+                        HStack(spacing: 16) {
+                            GlassContainer(cornerRadius: 16, padding: 16) {
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text("Hiragana")
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                    
+                                    HStack(spacing: 12) {
+                                        TextField("ひらがな", text: $hiragana)
+                                            .glassTextField()
+                                        
+                                        Button(action: {
+                                            activeKanaField = .hiragana
+                                            showingKanaKeyboard = true
+                                        }) {
+                                            Text("あ")
+                                                .font(.title3)
+                                                .frame(width: 50, height: 50)
+                                                .glassCard(cornerRadius: 12)
+                                        }
+                                    }
                                 }
-                                .font(.caption)
+                            }
+                            
+                            GlassContainer(cornerRadius: 16, padding: 16) {
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text("Katakana")
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                    
+                                    HStack(spacing: 12) {
+                                        TextField("カタカナ", text: $katakana)
+                                            .glassTextField()
+                                        
+                                        Button(action: {
+                                            activeKanaField = .katakana
+                                            showingKanaKeyboard = true
+                                        }) {
+                                            Text("ア")
+                                                .font(.title3)
+                                                .frame(width: 50, height: 50)
+                                                .glassCard(cornerRadius: 12)
+                                        }
+                                    }
+                                }
                             }
                         }
                         
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Katakana")
-                                .font(.subheadline)
-                            
-                            HStack {
-                                TextField("カタカナ", text: $katakana)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                        // Romaji input
+                        GlassContainer(cornerRadius: 16, padding: 16) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Romaji")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
                                 
-                                Button("ア") {
-                                    activeKanaField = .katakana
-                                    showingKanaKeyboard = true
-                                }
-                                .font(.caption)
+                                TextField("Enter romaji pronunciation", text: $romaji)
+                                    .glassTextField()
                             }
                         }
-                    }
                     
-                    // Romaji input
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Romaji")
-                            .font(.headline)
+                        // Meanings input
+                        GlassContainer(cornerRadius: 16, padding: 16) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                HStack {
+                                    Text("Meanings")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                    
+                                    Spacer()
+                                    
+                                    Button(action: addMeaning) {
+                                        Image(systemName: "plus.circle.fill")
+                                            .font(.title2)
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                
+                                ForEach(meanings.indices, id: \.self) { index in
+                                    HStack(spacing: 12) {
+                                        TextField("Enter meaning \(index + 1)", text: $meanings[index])
+                                            .glassTextField()
+                                        
+                                        if meanings.count > 1 {
+                                            Button(action: { removeMeaning(at: index) }) {
+                                                Image(systemName: "minus.circle.fill")
+                                                    .font(.title2)
+                                                    .foregroundColor(.red)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         
-                        TextField("Enter romaji pronunciation", text: $romaji)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                    }
-                    
-                    // Meanings input
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("Meanings")
+                        // Part of speech
+                        GlassContainer(cornerRadius: 16, padding: 16) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Part of Speech")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                
+                                TextField("e.g., noun, verb, adjective", text: $partOfSpeech)
+                                    .glassTextField()
+                            }
+                        }
+                        
+                        // JLPT Level
+                        GlassContainer(cornerRadius: 16, padding: 16) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("JLPT Level (Optional)")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                
+                                HStack(spacing: 12) {
+                                    ForEach(JLPTLevel.allCases, id: \.self) { level in
+                                        Button(action: {
+                                            selectedJLPTLevel = selectedJLPTLevel == level ? nil : level
+                                        }) {
+                                            Text(level.rawValue)
+                                                .fontWeight(.semibold)
+                                                .padding(.horizontal, 16)
+                                                .padding(.vertical, 8)
+                                                .background(
+                                                    Group {
+                                                        if selectedJLPTLevel == level {
+                                                            LinearGradient(
+                                                                colors: [Color.blue, Color.purple],
+                                                                startPoint: .leading,
+                                                                endPoint: .trailing
+                                                            )
+                                                        } else {
+                                                            LinearGradient(
+                                                                colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.1)],
+                                                                startPoint: .leading,
+                                                                endPoint: .trailing
+                                                            )
+                                                        }
+                                                    }
+                                                )
+                                                .foregroundColor(selectedJLPTLevel == level ? .white : .primary)
+                                                .cornerRadius(12)
+                                                .shadow(color: selectedJLPTLevel == level ? Color.blue.opacity(0.3) : Color.clear, radius: 5, x: 0, y: 2)
+                                        }
+                                    }
+                                    
+                                    Spacer()
+                                }
+                            }
+                        }
+                        
+                        // Source input (optional)
+                        GlassContainer(cornerRadius: 16, padding: 16) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Source (Optional)")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                
+                                TextField("e.g., Manga: One Piece Ch.1, Page 5", text: $source)
+                                    .glassTextField()
+                            }
+                        }
+                        
+                        // Save button
+                        Button(action: saveVocabulary) {
+                            Text("Save Word")
                                 .font(.headline)
-                            
-                            Spacer()
-                            
-                            Button(action: addMeaning) {
-                                Image(systemName: "plus.circle.fill")
-                                    .foregroundColor(.blue)
-                            }
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .glassButton(isEnabled: canSave)
+                                .foregroundColor(canSave ? .white : .gray)
                         }
-                        
-                        ForEach(meanings.indices, id: \.self) { index in
-                            HStack {
-                                TextField("Enter meaning \(index + 1)", text: $meanings[index])
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                
-                                if meanings.count > 1 {
-                                    Button(action: { removeMeaning(at: index) }) {
-                                        Image(systemName: "minus.circle.fill")
-                                            .foregroundColor(.red)
-                                    }
-                                }
-                            }
-                        }
+                        .disabled(!canSave)
+                        .padding(.top, 10)
                     }
-                    
-                    // Part of speech
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Part of Speech")
-                            .font(.headline)
-                        
-                        TextField("e.g., noun, verb, adjective", text: $partOfSpeech)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                    }
-                    
-                    // JLPT Level
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("JLPT Level (Optional)")
-                            .font(.headline)
-                        
-                        HStack {
-                            ForEach(JLPTLevel.allCases, id: \.self) { level in
-                                Button(action: {
-                                    selectedJLPTLevel = selectedJLPTLevel == level ? nil : level
-                                }) {
-                                    Text(level.rawValue)
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 6)
-                                        .background(selectedJLPTLevel == level ? Color.blue : Color.gray.opacity(0.2))
-                                        .foregroundColor(selectedJLPTLevel == level ? .white : .primary)
-                                        .cornerRadius(8)
-                                }
-                            }
-                            
-                            Spacer()
-                        }
-                    }
-                    
-                    // Source input (optional)
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Source (Optional)")
-                            .font(.headline)
-                        
-                        TextField("e.g., Manga: One Piece Ch.1, Page 5", text: $source)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                    }
-                    
-                    // Save button
-                    Button(action: saveVocabulary) {
-                        Text("Save Word")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(canSave ? Color.blue : Color.gray)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    .disabled(!canSave)
-                    .padding(.top, 20)
-                    
-                    Spacer()
+                    .padding()
                 }
-                .padding()
             }
             .navigationTitle("Add New Word")
             .navigationBarTitleDisplayMode(.inline)

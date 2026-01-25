@@ -33,77 +33,127 @@ struct SearchView: View {
     @State private var searchText = ""
     @State private var inputType: InputType = .romaji
     @State private var showingCustomKeyboard = false
+    @State private var showingDownloadView = false
     @State private var dictionaryResults: [JapaneseEntry] = []
     
     var body: some View {
         NavigationView {
-            VStack {
-                // Input type selector
-                Picker("Input Type", selection: $inputType) {
-                    ForEach(InputType.allCases, id: \.self) { type in
-                        Text(type.displayName)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
+            ZStack {
+                // Gradient background
+                LinearGradient(
+                    colors: [
+                        Color.blue.opacity(0.1),
+                        Color.purple.opacity(0.1),
+                        Color.pink.opacity(0.05)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
                 
-                // Search input
-                HStack {
-                    TextField("Search dictionary for \(inputType.displayName.lowercased())...", text: $searchText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .onChange(of: searchText) { _, newValue in
-                            searchDictionary(newValue)
+                VStack(spacing: 16) {
+                    // Input type selector with glass effect
+                    GlassContainer(cornerRadius: 16, padding: 12) {
+                        Picker("Input Type", selection: $inputType) {
+                            ForEach(InputType.allCases, id: \.self) { type in
+                                Text(type.displayName)
+                            }
                         }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                    .padding(.horizontal)
                     
-                    if inputType != .romaji {
-                        Button("⌨️") {
-                            showingCustomKeyboard = true
+                    // Search input with glass effect
+                    HStack(spacing: 12) {
+                        TextField("Search dictionary for \(inputType.displayName.lowercased())...", text: $searchText)
+                            .glassTextField()
+                            .onChange(of: searchText) { _, newValue in
+                                searchDictionary(newValue)
+                            }
+                        
+                        if inputType != .romaji {
+                            Button(action: {
+                                showingCustomKeyboard = true
+                            }) {
+                                Text("⌨️")
+                                    .font(.title2)
+                                    .frame(width: 50, height: 50)
+                                    .glassCard(cornerRadius: 12)
+                            }
                         }
                     }
-                }
-                .padding(.horizontal)
+                    .padding(.horizontal)
                 
-                // Results
-                if dictionaryResults.isEmpty && !searchText.isEmpty {
-                    VStack(spacing: 12) {
-                        Spacer()
-                        Image(systemName: "magnifyingglass")
-                            .font(.system(size: 40))
-                            .foregroundColor(.gray.opacity(0.5))
-                        Text("No results found for \"\(searchText)\"")
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                    }
-                    .padding()
-                } else if dictionaryResults.isEmpty && searchText.isEmpty {
-                    VStack(spacing: 12) {
-                        Spacer()
-                        Image(systemName: "book.closed")
-                            .font(.system(size: 40))
-                            .foregroundColor(.gray.opacity(0.5))
-                        Text("Search for Japanese words")
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                        Text("Try searching for 'hello', 'no', or 'yes'")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                    }
-                    .padding()
-                } else {
-                    List(dictionaryResults) { entry in
-                        DictionaryEntryRowView(entry: entry, vocabularyManager: vocabularyManager)
+                    // Results
+                    if dictionaryResults.isEmpty && !searchText.isEmpty {
+                        VStack(spacing: 12) {
+                            Spacer()
+                            GlassContainer(cornerRadius: 20, padding: 24) {
+                                VStack(spacing: 16) {
+                                    Image(systemName: "magnifyingglass")
+                                        .font(.system(size: 50))
+                                        .foregroundColor(.blue.opacity(0.6))
+                                    Text("No results found for \"\(searchText)\"")
+                                        .font(.body)
+                                        .foregroundColor(.primary)
+                                }
+                            }
+                            .padding()
+                            Spacer()
+                        }
+                    } else if dictionaryResults.isEmpty && searchText.isEmpty {
+                        VStack(spacing: 12) {
+                            Spacer()
+                            GlassContainer(cornerRadius: 20, padding: 24) {
+                                VStack(spacing: 16) {
+                                    Image(systemName: "book.closed")
+                                        .font(.system(size: 50))
+                                        .foregroundColor(.purple.opacity(0.6))
+                                    Text("Search for Japanese words")
+                                        .font(.title3)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.primary)
+                                    Text("Try searching for 'hello', 'no', or 'yes'")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            .padding()
+                            Spacer()
+                        }
+                    } else {
+                        ScrollView {
+                            LazyVStack(spacing: 12) {
+                                ForEach(dictionaryResults) { entry in
+                                    DictionaryEntryRowView(entry: entry, vocabularyManager: vocabularyManager)
+                                }
+                            }
+                            .padding()
+                        }
                     }
                 }
             }
+            }
             .navigationTitle("Dictionary Search")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showingDownloadView = true
+                    }) {
+                        Image(systemName: dictionaryService.jmdictLoaded ? "checkmark.circle.fill" : "arrow.down.circle")
+                            .foregroundColor(dictionaryService.jmdictLoaded ? .green : .blue)
+                    }
+                }
+            }
             .sheet(isPresented: $showingCustomKeyboard) {
                 KanaKeyboardView(
                     text: $searchText,
                     keyboardType: inputType.keyboardType,
                     isPresented: $showingCustomKeyboard
                 )
+            }
+            .sheet(isPresented: $showingDownloadView) {
+                JMDictDownloadView()
             }
         }
     }
@@ -128,50 +178,64 @@ struct DictionaryEntryRowView: View {
     @State private var isAdded = false
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(entry.word)
-                        .font(.headline)
-                    
-                    if let level = entry.jlptLevel {
-                        Text(level.rawValue)
-                            .font(.caption)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(Color.blue.opacity(0.2))
-                            .cornerRadius(4)
+        GlassContainer(cornerRadius: 16, padding: 16) {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text(entry.word)
+                            .font(.headline)
+                            .fontWeight(.bold)
+                        
+                        if let level = entry.jlptLevel {
+                            Text(level.rawValue)
+                                .font(.caption2)
+                                .fontWeight(.semibold)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(
+                                    Capsule()
+                                        .fill(
+                                            LinearGradient(
+                                                colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.2)],
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                )
+                                .foregroundColor(.primary)
+                        }
+                        
+                        Spacer()
                     }
                     
-                    Spacer()
-                }
-                
-                if let hiragana = entry.hiragana {
-                    Text(hiragana)
-                        .font(.subheadline)
+                    if let hiragana = entry.hiragana {
+                        Text(hiragana)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Text(entry.romaji)
+                        .font(.caption)
                         .foregroundColor(.secondary)
+                    
+                    Text(entry.meanings.joined(separator: ", "))
+                        .font(.body)
+                        .foregroundColor(.primary)
                 }
                 
-                Text(entry.romaji)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                Spacer()
                 
-                Text(entry.meanings.joined(separator: ", "))
-                    .font(.body)
+                Button(action: {
+                    addToVocabulary()
+                }) {
+                    Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(isAdded ? .green : .blue)
+                        .shadow(color: isAdded ? Color.green.opacity(0.3) : Color.blue.opacity(0.3), radius: 8)
+                }
+                .disabled(isAdded)
             }
-            
-            Spacer()
-            
-            Button(action: {
-                addToVocabulary()
-            }) {
-                Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle")
-                    .font(.title2)
-                    .foregroundColor(isAdded ? .green : .blue)
-            }
-            .disabled(isAdded)
         }
-        .padding(.vertical, 2)
     }
     
     private func addToVocabulary() {
@@ -205,42 +269,59 @@ struct VocabularyEntryRowView: View {
     let entry: VocabularyEntry
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text(entry.displayWord)
-                    .font(.headline)
-                
-                if let level = entry.jlptLevel {
-                    Text(level.rawValue)
-                        .font(.caption)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(Color.blue.opacity(0.2))
-                        .cornerRadius(4)
+        GlassContainer(cornerRadius: 16, padding: 16) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text(entry.displayWord)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
+                    if let level = entry.jlptLevel {
+                        Text(level.rawValue)
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                Capsule()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.2)],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
+                            )
+                            .foregroundColor(.primary)
+                    }
+                    
+                    Spacer()
                 }
                 
-                Spacer()
-            }
-            
-            Text(entry.primaryKana)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            
-            Text(entry.romaji)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            
-            Text(entry.meanings.joined(separator: ", "))
-                .font(.body)
-            
-            if let source = entry.source {
-                Text("Source: \(source)")
-                    .font(.caption2)
+                Text(entry.primaryKana)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                Text(entry.romaji)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Text(entry.meanings.joined(separator: ", "))
+                    .font(.body)
+                    .foregroundColor(.primary)
+                
+                if let source = entry.source {
+                    HStack {
+                        Image(systemName: "bookmark.fill")
+                            .font(.caption2)
+                        Text("Source: \(source)")
+                            .font(.caption2)
+                    }
                     .foregroundColor(.blue)
-                    .padding(.top, 2)
+                    .padding(.top, 4)
+                }
             }
         }
-        .padding(.vertical, 2)
     }
 }
 

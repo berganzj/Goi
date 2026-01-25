@@ -440,5 +440,329 @@
     "partOfSpeech": ["noun"],
     "jlptLevel": "N2",
     "kanji": "水母"
+  },
+  {
+    "word": "こんにちは",
+    "hiragana": "こんにちは",
+    "romaji": "konnichiwa",
+    "meanings": ["hello", "good afternoon"],
+    "partOfSpeech": ["interjection"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "はい",
+    "hiragana": "はい",
+    "romaji": "hai",
+    "meanings": ["yes"],
+    "partOfSpeech": ["interjection"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "いいえ",
+    "hiragana": "いいえ",
+    "romaji": "iie",
+    "meanings": ["no"],
+    "partOfSpeech": ["interjection"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "ありがとう",
+    "hiragana": "ありがとう",
+    "romaji": "arigatou",
+    "meanings": ["thank you"],
+    "partOfSpeech": ["interjection"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "すみません",
+    "hiragana": "すみません",
+    "romaji": "sumimasen",
+    "meanings": ["excuse me", "sorry"],
+    "partOfSpeech": ["interjection"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "おはよう",
+    "hiragana": "おはよう",
+    "romaji": "ohayou",
+    "meanings": ["good morning"],
+    "partOfSpeech": ["interjection"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "こんばんは",
+    "hiragana": "こんばんは",
+    "romaji": "konbanwa",
+    "meanings": ["good evening"],
+    "partOfSpeech": ["interjection"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "さようなら",
+    "hiragana": "さようなら",
+    "romaji": "sayounara",
+    "meanings": ["goodbye"],
+    "partOfSpeech": ["interjection"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "私",
+    "hiragana": "わたし",
+    "romaji": "watashi",
+    "meanings": ["I", "me"],
+    "partOfSpeech": ["pronoun"],
+    "jlptLevel": "N5",
+    "kanji": "私"
+  },
+  {
+    "word": "あなた",
+    "hiragana": "あなた",
+    "romaji": "anata",
+    "meanings": ["you"],
+    "partOfSpeech": ["pronoun"],
+    "jlptLevel": "N5",
+    "kanji": null
+  },
+  {
+    "word": "水",
+    "hiragana": "みず",
+    "romaji": "mizu",
+    "meanings": ["water"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "水"
+  },
+  {
+    "word": "食べる",
+    "hiragana": "たべる",
+    "romaji": "taberu",
+    "meanings": ["to eat"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "食べる"
+  },
+  {
+    "word": "飲む",
+    "hiragana": "のむ",
+    "romaji": "nomu",
+    "meanings": ["to drink"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "飲む"
+  },
+  {
+    "word": "行く",
+    "hiragana": "いく",
+    "romaji": "iku",
+    "meanings": ["to go"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "行く"
+  },
+  {
+    "word": "来る",
+    "hiragana": "くる",
+    "romaji": "kuru",
+    "meanings": ["to come"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "来る"
+  },
+  {
+    "word": "見る",
+    "hiragana": "みる",
+    "romaji": "miru",
+    "meanings": ["to see", "to look", "to watch"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "見る"
+  },
+  {
+    "word": "聞く",
+    "hiragana": "きく",
+    "romaji": "kiku",
+    "meanings": ["to hear", "to listen", "to ask"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "聞く"
+  },
+  {
+    "word": "話す",
+    "hiragana": "はなす",
+    "romaji": "hanasu",
+    "meanings": ["to speak", "to talk"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "話す"
+  },
+  {
+    "word": "読む",
+    "hiragana": "よむ",
+    "romaji": "yomu",
+    "meanings": ["to read"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "読む"
+  },
+  {
+    "word": "書く",
+    "hiragana": "かく",
+    "romaji": "kaku",
+    "meanings": ["to write"],
+    "partOfSpeech": ["verb"],
+    "jlptLevel": "N5",
+    "kanji": "書く"
+  },
+  {
+    "word": "大きい",
+    "hiragana": "おおきい",
+    "romaji": "ookii",
+    "meanings": ["big", "large"],
+    "partOfSpeech": ["adjective"],
+    "jlptLevel": "N5",
+    "kanji": "大きい"
+  },
+  {
+    "word": "小さい",
+    "hiragana": "ちいさい",
+    "romaji": "chiisai",
+    "meanings": ["small", "little"],
+    "partOfSpeech": ["adjective"],
+    "jlptLevel": "N5",
+    "kanji": "小さい"
+  },
+  {
+    "word": "良い",
+    "hiragana": "いい",
+    "romaji": "ii",
+    "meanings": ["good"],
+    "partOfSpeech": ["adjective"],
+    "jlptLevel": "N5",
+    "kanji": "良い"
+  },
+  {
+    "word": "悪い",
+    "hiragana": "わるい",
+    "romaji": "warui",
+    "meanings": ["bad"],
+    "partOfSpeech": ["adjective"],
+    "jlptLevel": "N5",
+    "kanji": "悪い"
+  },
+  {
+    "word": "新しい",
+    "hiragana": "あたらしい",
+    "romaji": "atarashii",
+    "meanings": ["new"],
+    "partOfSpeech": ["adjective"],
+    "jlptLevel": "N5",
+    "kanji": "新しい"
+  },
+  {
+    "word": "古い",
+    "hiragana": "ふるい",
+    "romaji": "furui",
+    "meanings": ["old"],
+    "partOfSpeech": ["adjective"],
+    "jlptLevel": "N5",
+    "kanji": "古い"
+  },
+  {
+    "word": "本",
+    "hiragana": "ほん",
+    "romaji": "hon",
+    "meanings": ["book"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "本"
+  },
+  {
+    "word": "人",
+    "hiragana": "ひと",
+    "romaji": "hito",
+    "meanings": ["person", "people"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "人"
+  },
+  {
+    "word": "家",
+    "hiragana": "いえ",
+    "romaji": "ie",
+    "meanings": ["house", "home"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "家"
+  },
+  {
+    "word": "学校",
+    "hiragana": "がっこう",
+    "romaji": "gakkou",
+    "meanings": ["school"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "学校"
+  },
+  {
+    "word": "今日",
+    "hiragana": "きょう",
+    "romaji": "kyou",
+    "meanings": ["today"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "今日"
+  },
+  {
+    "word": "明日",
+    "hiragana": "あした",
+    "romaji": "ashita",
+    "meanings": ["tomorrow"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "明日"
+  },
+  {
+    "word": "昨日",
+    "hiragana": "きのう",
+    "romaji": "kinou",
+    "meanings": ["yesterday"],
+    "partOfSpeech": ["noun"],
+    "jlptLevel": "N5",
+    "kanji": "昨日"
+  },
+  {
+    "word": "一",
+    "hiragana": "いち",
+    "romaji": "ichi",
+    "meanings": ["one"],
+    "partOfSpeech": ["noun", "numeral"],
+    "jlptLevel": "N5",
+    "kanji": "一"
+  },
+  {
+    "word": "二",
+    "hiragana": "に",
+    "romaji": "ni",
+    "meanings": ["two"],
+    "partOfSpeech": ["noun", "numeral"],
+    "jlptLevel": "N5",
+    "kanji": "二"
+  },
+  {
+    "word": "三",
+    "hiragana": "さん",
+    "romaji": "san",
+    "meanings": ["three"],
+    "partOfSpeech": ["noun", "numeral"],
+    "jlptLevel": "N5",
+    "kanji": "三"
   }
 ]

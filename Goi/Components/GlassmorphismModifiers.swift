@@ -59,25 +59,43 @@ struct GlassCard: ViewModifier {
 struct GlassButton: ViewModifier {
     var isEnabled: Bool = true
     
+    private var gradientColors: [Color] {
+        if isEnabled {
+            return [
+                Color.blue.opacity(0.5),
+                Color.purple.opacity(0.4),
+                Color.pink.opacity(0.2)
+            ]
+        } else {
+            return [
+                Color.gray.opacity(0.25),
+                Color.gray.opacity(0.15)
+            ]
+        }
+    }
+    
+    @ViewBuilder
+    private var backgroundShape: some View {
+        if isEnabled {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(.ultraThinMaterial)
+        } else {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.gray.opacity(0.3))
+        }
+    }
+    
     func body(content: Content) -> some View {
         content
             .padding(.horizontal, 20)
             .padding(.vertical, 12)
             .background {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isEnabled ? .ultraThinMaterial : Color.gray.opacity(0.3))
+                backgroundShape
                     .overlay {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(
                                 LinearGradient(
-                                    colors: isEnabled ? [
-                                        Color.blue.opacity(0.5),
-                                        Color.purple.opacity(0.4),
-                                        Color.pink.opacity(0.2)
-                                    ] : [
-                                        Color.gray.opacity(0.25),
-                                        Color.gray.opacity(0.15)
-                                    ],
+                                    colors: gradientColors,
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )

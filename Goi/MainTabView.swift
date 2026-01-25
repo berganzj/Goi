@@ -140,8 +140,8 @@ struct SearchView: View {
                     Button(action: {
                         showingDownloadView = true
                     }) {
-                        Image(systemName: dictionaryService.jmdictLoaded ? "checkmark.circle.fill" : "arrow.down.circle")
-                            .foregroundColor(dictionaryService.jmdictLoaded ? .green : .blue)
+                        Image(systemName: dictionaryService.isJMDictLoaded ? "checkmark.circle.fill" : "arrow.down.circle")
+                            .foregroundColor(dictionaryService.isJMDictLoaded ? .green : .blue)
                     }
                 }
             }

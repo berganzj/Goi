@@ -356,6 +356,11 @@ class JMDictService: ObservableObject {
             return "Not downloaded"
         }
     }
+    
+    // Public accessor for jmdictLoaded
+    var isJMDictLoaded: Bool {
+        return jmdictLoaded
+    }
 }
 
 // MARK: - JapaneseEntry for JMDICT compatibility

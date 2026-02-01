@@ -324,7 +324,7 @@ class JMDictService: ObservableObject {
     private func generateRomaji(from kana: String) -> String {
         // Basic hiragana to romaji mapping (simplified)
         // For a full implementation, use a library like "KanaKit" or similar
-        let hiraganaToRomaji: [String: String] = [
+        let _: [String: String] = [
             "あ": "a", "い": "i", "う": "u", "え": "e", "お": "o",
             "か": "ka", "き": "ki", "く": "ku", "け": "ke", "こ": "ko",
             "さ": "sa", "し": "shi", "す": "su", "せ": "se", "そ": "so",

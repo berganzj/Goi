@@ -63,21 +63,70 @@ class VocabularyManager: ObservableObject {
     
     private let entriesKey = "vocabulary_entries"
     
+    // File-based storage in Documents directory (persists across app updates)
+    private var vocabularyFileURL: URL {
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return documentsPath.appendingPathComponent("vocabulary_entries.json")
+    }
+    
     init() {
+        migrateFromUserDefaultsIfNeeded()
         loadData()
     }
     
     // MARK: - Data Persistence
     private func saveEntries() {
-        if let data = try? JSONEncoder().encode(vocabularyEntries) {
+        // Save to Documents directory (persists across updates)
+        do {
+            let data = try JSONEncoder().encode(vocabularyEntries)
+            try data.write(to: vocabularyFileURL, options: [.atomicWrite, .completeFileProtection])
+            
+            // Also keep UserDefaults as backup for one version cycle
             UserDefaults.standard.set(data, forKey: entriesKey)
+        } catch {
+            print("Failed to save vocabulary entries: \(error)")
+            // Fallback to UserDefaults if file write fails
+            if let data = try? JSONEncoder().encode(vocabularyEntries) {
+                UserDefaults.standard.set(data, forKey: entriesKey)
+            }
         }
     }
     
     private func loadData() {
+        // Try loading from Documents directory first (primary storage)
+        if FileManager.default.fileExists(atPath: vocabularyFileURL.path),
+           let data = try? Data(contentsOf: vocabularyFileURL),
+           let entries = try? JSONDecoder().decode([VocabularyEntry].self, from: data) {
+            vocabularyEntries = entries
+            return
+        }
+        
+        // Fallback to UserDefaults (for migration)
         if let data = UserDefaults.standard.data(forKey: entriesKey),
            let entries = try? JSONDecoder().decode([VocabularyEntry].self, from: data) {
             vocabularyEntries = entries
+            // Migrate to file-based storage
+            saveEntries()
+        }
+    }
+    
+    // MARK: - Migration
+    private func migrateFromUserDefaultsIfNeeded() {
+        let migrationKey = "vocabulary_migrated_to_file"
+        guard !UserDefaults.standard.bool(forKey: migrationKey) else { return }
+        
+        // If file doesn't exist but UserDefaults has data, migrate it
+        if !FileManager.default.fileExists(atPath: vocabularyFileURL.path),
+           let data = UserDefaults.standard.data(forKey: entriesKey) {
+            do {
+                try data.write(to: vocabularyFileURL, options: [.atomicWrite, .completeFileProtection])
+                UserDefaults.standard.set(true, forKey: migrationKey)
+                print("✅ Migrated vocabulary entries to Documents directory")
+            } catch {
+                print("Failed to migrate vocabulary entries: \(error)")
+            }
+        } else {
+            UserDefaults.standard.set(true, forKey: migrationKey)
         }
     }
     

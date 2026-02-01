@@ -51,7 +51,7 @@ struct JMDictDownloadView: View {
                                     .font(.body)
                                     .foregroundColor(.secondary)
                                 
-                                if dictionaryService.isJMDictLoaded {
+                                if dictionaryService.jmdictLoaded {
                                     HStack {
                                         Image(systemName: "checkmark.circle.fill")
                                             .foregroundColor(.green)
@@ -90,7 +90,7 @@ struct JMDictDownloadView: View {
                         
                         // Action buttons
                         VStack(spacing: 12) {
-                            if !dictionaryService.isJMDictLoaded && !dictionaryService.isDownloading {
+                            if !dictionaryService.jmdictLoaded && !dictionaryService.isDownloading {
                                 Button(action: {
                                     dictionaryService.downloadJMDict()
                                 }) {
@@ -107,7 +107,7 @@ struct JMDictDownloadView: View {
                                 .padding(.horizontal)
                             }
                             
-                            if dictionaryService.hasJMDictFile() && !dictionaryService.isJMDictLoaded {
+                            if dictionaryService.hasJMDictFile() && !dictionaryService.jmdictLoaded {
                                 Button(action: {
                                     dictionaryService.loadJMDictFromFile()
                                 }) {

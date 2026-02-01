@@ -19,8 +19,6 @@
 		A20000042ACC001100000042 /* VocabularyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000043ACC001100000043 /* VocabularyListView.swift */; };
 		A20000044ACC001100000044 /* AddVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000045ACC001100000045 /* AddVocabularyView.swift */; };
 		A20000046ACC001100000046 /* CoreVocabulary.json in Resources */ = {isa = PBXBuildFile; fileRef = A20000047ACC001100000047 /* CoreVocabulary.json */; };
-		A20000048ACC001100000048 /* GlassmorphismModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000049ACC001100000049 /* GlassmorphismModifiers.swift */; };
-		A20000050ACC001100000050 /* JMDictDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000051ACC001100000051 /* JMDictDownloadView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +36,6 @@
 		A20000043ACC001100000043 /* VocabularyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyListView.swift; sourceTree = "<group>"; };
 		A20000045ACC001100000045 /* AddVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyView.swift; sourceTree = "<group>"; };
 		A20000047ACC001100000047 /* CoreVocabulary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CoreVocabulary.json; sourceTree = "<group>"; };
-		A20000049ACC001100000049 /* GlassmorphismModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassmorphismModifiers.swift; sourceTree = "<group>"; };
-		A20000051ACC001100000051 /* JMDictDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMDictDownloadView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +97,6 @@
 				A20000035ACC001100000035 /* DictionaryView.swift */,
 				A20000043ACC001100000043 /* VocabularyListView.swift */,
 				A20000045ACC001100000045 /* AddVocabularyView.swift */,
-				A20000051ACC001100000051 /* JMDictDownloadView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -118,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				A20000039ACC001100000039 /* KanaKeyboard.swift */,
-				A20000049ACC001100000049 /* GlassmorphismModifiers.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -213,8 +207,6 @@
 				A20000040ACC001100000040 /* JMDictService.swift in Sources */,
 				A20000042ACC001100000042 /* VocabularyListView.swift in Sources */,
 				A20000044ACC001100000044 /* AddVocabularyView.swift in Sources */,
-				A20000048ACC001100000048 /* GlassmorphismModifiers.swift in Sources */,
-				A20000050ACC001100000050 /* JMDictDownloadView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,7 +340,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Goi/Preview Content\"";
-				DEVELOPMENT_TEAM = 7SLW466P76;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Goi/Info.plist;
@@ -357,7 +349,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -383,7 +375,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Goi/Preview Content\"";
-				DEVELOPMENT_TEAM = 7SLW466P76;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Goi/Info.plist;
@@ -392,7 +384,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

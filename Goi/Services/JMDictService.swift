@@ -343,8 +343,12 @@ class JMDictService: ObservableObject {
     }
     
     // MARK: - Helper Methods
+    var isJMDictLoaded: Bool {
+        return jmdictLoaded
+    }
+    
     func hasJMDictFile() -> Bool {
-        return FileManager.default.fileExists(atPath: jmdictFileURL.path)
+return FileManager.default.fileExists(atPath: jmdictFileURL.path)
     }
     
     func getJMDictStatus() -> String {

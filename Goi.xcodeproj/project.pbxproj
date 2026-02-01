@@ -20,6 +20,7 @@
 		A20000044ACC001100000044 /* AddVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000045ACC001100000045 /* AddVocabularyView.swift */; };
 		A20000046ACC001100000046 /* CoreVocabulary.json in Resources */ = {isa = PBXBuildFile; fileRef = A20000047ACC001100000047 /* CoreVocabulary.json */; };
 		A20000048ACC001100000048 /* GlassmorphismModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000049ACC001100000049 /* GlassmorphismModifiers.swift */; };
+		A20000050ACC001100000050 /* JMDictDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000051ACC001100000051 /* JMDictDownloadView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		A20000045ACC001100000045 /* AddVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyView.swift; sourceTree = "<group>"; };
 		A20000047ACC001100000047 /* CoreVocabulary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CoreVocabulary.json; sourceTree = "<group>"; };
 		A20000049ACC001100000049 /* GlassmorphismModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassmorphismModifiers.swift; sourceTree = "<group>"; };
+		A20000051ACC001100000051 /* JMDictDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMDictDownloadView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				A20000035ACC001100000035 /* DictionaryView.swift */,
 				A20000043ACC001100000043 /* VocabularyListView.swift */,
 				A20000045ACC001100000045 /* AddVocabularyView.swift */,
+				A20000051ACC001100000051 /* JMDictDownloadView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				A20000042ACC001100000042 /* VocabularyListView.swift in Sources */,
 				A20000044ACC001100000044 /* AddVocabularyView.swift in Sources */,
 				A20000048ACC001100000048 /* GlassmorphismModifiers.swift in Sources */,
+				A20000050ACC001100000050 /* JMDictDownloadView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
